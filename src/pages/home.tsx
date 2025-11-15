@@ -6,7 +6,6 @@ import {
   Mail, 
   Phone, 
   ExternalLink,
-  Code2,
   Briefcase,
   GraduationCap,
   Award
@@ -60,9 +59,10 @@ const projects = [
     title: 'KrishnaCrypt',
     period: 'Apr 2025 – Jun 2025',
     stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'JWT'],
-    description: 'Developed a secure real-time chat platform with custom SPN-AES encryption and JWT authentication. Engineered 10ms message latency for 500+ concurrent users using WebSockets and optimized DB queries. Implemented role-based key management, encryption visualization, and scalable cloud deployment via Docker.',
+    description: 'Developed a secure real-time chat platform with custom SPN-AES encryption and JWT authentication. Engineered 10ms message latency for 500+ concurrent users using WebSockets and optimized DB queries.',
     github: '#',
-    demo: '#'
+    demo: '#',
+    image: '/hero-avatar.png'
   },
   {
     title: 'Rakshak - DDoS Protection System',
@@ -70,15 +70,17 @@ const projects = [
     stack: ['Node.js', 'Nginx', 'AWS', 'Redis', 'MongoDB'],
     description: 'Built a real-time DDoS mitigation system with IP logging, rate limiting, and honeypot integration. Deployed load balancing on AWS EC2, improving request handling throughput by 40%.',
     github: '#',
-    demo: '#'
+    demo: '#',
+    image: '/hero-avatar.png'
   },
   {
     title: 'Aakash Vaani - Voice-Based Mapping System',
     period: 'Sep 2024 – Dec 2024',
     stack: ['JavaScript', 'Leaflet.js', 'Web Speech API'],
-    description: 'Built a voice-controlled mapping app integrating OpenStreetMap, Bhuvan, and NASA APIs for real-time navigation. Enabled natural voice commands and accessibility features using the Web Speech API.',
+    description: 'Built a voice-controlled mapping app integrating OpenStreetMap, Bhuvan, and NASA APIs for real-time navigation. Enabled natural voice commands and accessibility features.',
     github: '#',
-    demo: '#'
+    demo: '#',
+    image: '/hero-avatar.png'
   }
 ];
 
@@ -106,297 +108,298 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            y: [0, -30, 0],
-            x: [0, 20, 0]
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-20 right-20 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 30, 0],
-            x: [0, -20, 0]
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute bottom-20 left-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"
-        />
-      </div>
+    <div className="min-h-screen gradient-bg">
+      <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b border-border/50">
+        <div className="max-w-[1055px] mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="font-semibold text-lg text-foreground">RK</div>
+          <div className="flex gap-3">
+            <a 
+              href="https://github.com/iamrohitkandpal" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              aria-label="GitHub Profile"
+            >
+              <Github className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://linkedin.com/in/rohit-kandpal" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a 
+              href="mailto:iamrohitkandpal@gmail.com"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              aria-label="Email"
+            >
+              <Mail className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </header>
 
-      <div className="relative">
-        <section id="hero" className="min-h-screen flex items-center justify-center px-4 py-20">
+      <main className="max-w-[1055px] mx-auto px-6">
+        <section id="hero" className="min-h-[calc(100vh-73px)] flex items-center justify-center py-20">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeInUp}
             transition={{ duration: 0.6 }}
-            className="max-w-5xl mx-auto text-center"
+            className="text-center max-w-3xl"
           >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="mb-8"
+            <motion.div 
+              className="inline-block mb-3"
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <img 
-                src="/hero-avatar.png" 
-                alt="Rohit Navinchandra Kandpal" 
-                className="w-40 h-40 rounded-full mx-auto border-4 border-cyan-500/30 shadow-2xl shadow-cyan-500/20"
-              />
+              <div className="w-12 h-0.5 bg-foreground/30 mb-6 mx-auto" />
             </motion.div>
+
+            <motion.p 
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-sm tracking-wider text-muted-foreground mb-4 uppercase"
+            >
+              Hello, I am
+            </motion.p>
 
             <motion.h1 
               variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-6xl md:text-8xl font-bold mb-6 text-foreground tracking-tight leading-tight"
             >
               Rohit Navinchandra Kandpal
             </motion.h1>
 
             <motion.p 
               variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-2xl md:text-3xl text-cyan-400 font-semibold mb-6"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl md:text-2xl text-foreground/90 font-medium mb-6"
             >
               Full Stack Developer
             </motion.p>
 
             <motion.p 
               variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed"
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-muted-foreground leading-relaxed mb-12 max-w-2xl mx-auto"
             >
-              Building secure and scalable web applications with strong fundamentals in system design and cybersecurity
+              A passionate developer and lifelong learner, dedicated to crafting secure and scalable web applications and exploring the ever-evolving world of technology.
             </motion.p>
 
             <motion.div 
               variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap gap-4 justify-center"
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex gap-4 justify-center mb-8"
             >
               <Button 
                 size="lg"
                 onClick={() => scrollToSection('projects')}
-                className="bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-600/30 hover:shadow-xl hover:shadow-cyan-500/40 transition-all duration-300 hover:scale-105"
+                className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8"
               >
-                View Projects
-              </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                onClick={() => scrollToSection('contact')}
-                className="border-cyan-600 text-cyan-400 hover:bg-cyan-600/10 hover:border-cyan-500 transition-all duration-300 hover:scale-105"
-              >
-                Contact Me
+                Explore my projects
               </Button>
             </motion.div>
 
+            <motion.p 
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-sm text-muted-foreground italic flex items-center gap-2 justify-center"
+            >
+              Already shipped 15+ projects 🇮🇳 IND
+            </motion.p>
+
             <motion.div 
               variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex gap-6 justify-center mt-12"
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex gap-1 justify-center mt-8"
             >
-              <a 
-                href="https://github.com/iamrohitkandpal" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-slate-400 hover:text-cyan-400 transition-all duration-300 hover:scale-110"
-                aria-label="GitHub Profile"
-              >
-                <Github className="w-6 h-6" />
-              </a>
-              <a 
-                href="https://linkedin.com/in/rohit-kandpal" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-slate-400 hover:text-cyan-400 transition-all duration-300 hover:scale-110"
-                aria-label="LinkedIn Profile"
-              >
-                <Linkedin className="w-6 h-6" />
-              </a>
-              <a 
-                href="mailto:iamrohitkandpal@gmail.com"
-                className="text-slate-400 hover:text-cyan-400 transition-all duration-300 hover:scale-110"
-                aria-label="Email"
-              >
-                <Mail className="w-6 h-6" />
-              </a>
-              <a 
-                href="tel:+917567054535"
-                className="text-slate-400 hover:text-cyan-400 transition-all duration-300 hover:scale-110"
-                aria-label="Phone"
-              >
-                <Phone className="w-6 h-6" />
-              </a>
+              {[1, 2, 3].map((_, i) => (
+                <div key={i} className="w-1.5 h-1.5 rounded-full bg-foreground/30" />
+              ))}
             </motion.div>
           </motion.div>
         </section>
 
-        <section id="about" className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUp}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                About Me
-              </h2>
-
-              <motion.div 
-                variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.02] mb-12"
-              >
-                <p className="text-lg text-slate-300 leading-relaxed">
-                  I'm a passionate Full Stack Developer specializing in building secure and scalable web applications. 
-                  With expertise in modern JavaScript frameworks, cloud technologies, and cybersecurity principles, 
-                  I create robust solutions that prioritize both performance and security. Currently pursuing B.Tech 
-                  in Computer Science with specialization in Cyber Security at Silver Oak College of Engineering & Technology, 
-                  maintaining a CGPA of 9.11/10. I'm enthusiastic about system design, real-time applications, and 
-                  leveraging cutting-edge technologies to solve complex problems.
-                </p>
-              </motion.div>
-
-              <div className="space-y-8">
-                {Object.entries(skills).map(([category, items], idx) => (
-                  <motion.div
-                    key={category}
-                    variants={fadeInUp}
-                    transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
-                    className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.02]"
-                  >
-                    <h3 className="text-xl font-semibold text-cyan-400 mb-4 flex items-center gap-2">
-                      <Code2 className="w-5 h-5" />
-                      {category}
-                    </h3>
-                    <div className="flex flex-wrap gap-3">
-                      {items.map((skill) => (
-                        <span 
-                          key={skill}
-                          className="px-4 py-2 bg-slate-800/50 text-slate-300 rounded-lg border border-slate-700 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:text-cyan-400 transition-all duration-300 hover:scale-105 cursor-default"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+        <div className="py-12">
+          <div className="flex items-center gap-2 justify-center">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <div key={i} className="w-1 h-1 rounded-full bg-foreground/20" />
+            ))}
           </div>
+        </div>
+
+        <section id="about" className="py-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-foreground">
+              About Me
+            </h2>
+
+            <motion.div 
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="bg-card border border-dashed border-border rounded-xl p-8 mb-12 max-w-3xl mx-auto"
+            >
+              <p className="text-muted-foreground leading-relaxed">
+                I'm a passionate Full Stack Developer specializing in building secure and scalable web applications. 
+                With expertise in modern JavaScript frameworks, cloud technologies, and cybersecurity principles, 
+                I create robust solutions that prioritize both performance and security. Currently pursuing B.Tech 
+                in Computer Science with specialization in Cyber Security at Silver Oak College of Engineering & Technology, 
+                maintaining a CGPA of 9.11/10. I'm enthusiastic about system design, real-time applications, and 
+                leveraging cutting-edge technologies to solve complex problems.
+              </p>
+            </motion.div>
+
+            <div className="space-y-6 max-w-3xl mx-auto">
+              {Object.entries(skills).map(([category, items], idx) => (
+                <motion.div
+                  key={category}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
+                >
+                  <h3 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">
+                    {category}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {items.map((skill) => (
+                      <span 
+                        key={skill}
+                        className="px-3 py-1.5 bg-muted text-foreground text-sm rounded-md border border-border hover:bg-accent transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </section>
 
-        <section id="experience" className="py-20 px-4 bg-slate-950/50">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUp}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                Experience
-              </h2>
-
-              <div className="space-y-6">
-                {experiences.map((exp, idx) => (
-                  <motion.div
-                    key={idx}
-                    variants={fadeInUp}
-                    transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }}
-                    className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.02] group"
-                  >
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                        <Briefcase className="w-6 h-6 text-cyan-400" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-slate-100 mb-1">{exp.role}</h3>
-                        <p className="text-cyan-400 font-semibold mb-1">{exp.company}</p>
-                        <p className="text-slate-400 text-sm">{exp.location} • {exp.period}</p>
-                      </div>
-                    </div>
-                    <ul className="space-y-3 ml-16">
-                      {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="text-slate-300 leading-relaxed flex gap-3">
-                          <span className="text-cyan-400 mt-1.5 flex-shrink-0">•</span>
-                          <span>{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+        <div className="py-12">
+          <div className="flex items-center gap-2 justify-center">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <div key={i} className="w-1 h-1 rounded-full bg-foreground/20" />
+            ))}
           </div>
+        </div>
+
+        <section id="experience" className="py-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-foreground">
+              Experience
+            </h2>
+
+            <div className="space-y-6 max-w-3xl mx-auto">
+              {experiences.map((exp, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }}
+                  className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
+                >
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="p-2 bg-muted rounded-lg border border-border">
+                      <Briefcase className="w-5 h-5 text-foreground" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-foreground mb-1">{exp.role}</h3>
+                      <p className="text-muted-foreground font-medium mb-0.5">{exp.company}</p>
+                      <p className="text-sm text-muted-foreground">{exp.location} • {exp.period}</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 ml-11">
+                    {exp.achievements.map((achievement, i) => (
+                      <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
+                        <span className="text-foreground/50 mt-1 flex-shrink-0">•</span>
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </section>
 
-        <section id="projects" className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUp}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                Featured Projects
-              </h2>
+        <div className="py-12">
+          <div className="flex items-center gap-2 justify-center">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <div key={i} className="w-1 h-1 rounded-full bg-foreground/20" />
+            ))}
+          </div>
+        </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects.map((project, idx) => (
-                  <motion.div
-                    key={idx}
-                    variants={fadeInUp}
-                    transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }}
-                    className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.05] group flex flex-col"
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="p-2 bg-cyan-500/10 rounded-lg border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                        <Code2 className="w-5 h-5 text-cyan-400" />
-                      </div>
-                      <span className="text-xs text-slate-500">{project.period}</span>
+        <section id="projects" className="py-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-foreground">
+              Featured Projects
+            </h2>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {projects.map((project, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={fadeInUp}
+                  transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }}
+                  className="bg-card border border-dashed border-border rounded-xl overflow-hidden hover:border-solid transition-all group"
+                >
+                  <div className="aspect-video bg-muted overflow-hidden">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-foreground/80 transition-colors">
+                        {project.title}
+                      </h3>
+                      <span className="text-xs text-muted-foreground whitespace-nowrap ml-2">{project.period}</span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-cyan-400 transition-colors duration-300">
-                      {project.title}
-                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                      {project.description}
+                    </p>
 
                     <div className="flex flex-wrap gap-2 mb-4">
                       {project.stack.map((tech) => (
                         <span 
                           key={tech}
-                          className="px-2 py-1 text-xs bg-slate-800/50 text-slate-400 rounded border border-slate-700 group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all duration-300"
+                          className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded border border-border"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
 
-                    <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
-                      {project.description}
-                    </p>
-
                     <div className="flex gap-3">
                       <a
                         href={project.github}
-                        className="flex items-center gap-2 px-4 py-2 bg-slate-800/50 text-slate-300 rounded-lg border border-slate-700 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:text-cyan-400 transition-all duration-300 hover:scale-105 text-sm"
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted text-foreground rounded-md border border-border hover:bg-accent transition-colors"
                         aria-label={`View ${project.title} on GitHub`}
                       >
                         <Github className="w-4 h-4" />
@@ -404,54 +407,62 @@ export default function Home() {
                       </a>
                       <a
                         href={project.demo}
-                        className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-all duration-300 hover:scale-105 text-sm shadow-lg shadow-cyan-600/30"
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:bg-foreground/90 transition-colors"
                         aria-label={`View ${project.title} demo`}
                       >
                         <ExternalLink className="w-4 h-4" />
                         Demo
                       </a>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </section>
 
-        <section id="education" className="py-20 px-4 bg-slate-950/50">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUp}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                Education & Achievements
-              </h2>
+        <div className="py-12">
+          <div className="flex items-center gap-2 justify-center">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <div key={i} className="w-1 h-1 rounded-full bg-foreground/20" />
+            ))}
+          </div>
+        </div>
 
+        <section id="education" className="py-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-foreground">
+              Education & Achievements
+            </h2>
+
+            <div className="max-w-3xl mx-auto space-y-6">
               <motion.div
                 variants={fadeInUp}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.02] group mb-8"
+                className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
               >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                    <GraduationCap className="w-6 h-6 text-cyan-400" />
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="p-2 bg-muted rounded-lg border border-border">
+                    <GraduationCap className="w-5 h-5 text-foreground" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-slate-100 mb-1">
+                    <h3 className="text-xl font-bold text-foreground mb-1">
                       Bachelor of Technology in Computer Science and Engineering
                     </h3>
-                    <p className="text-cyan-400 font-semibold mb-1">Specialization: Cyber Security</p>
-                    <p className="text-slate-400 mb-2">Silver Oak College of Engineering & Technology</p>
-                    <div className="flex flex-wrap gap-4 text-sm text-slate-400">
+                    <p className="text-muted-foreground font-medium mb-0.5">Specialization: Cyber Security</p>
+                    <p className="text-sm text-muted-foreground mb-2">Silver Oak College of Engineering & Technology</p>
+                    <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
                       <span>Ahmedabad, Gujarat</span>
                       <span>•</span>
                       <span>2022 – Expected Jun 2026</span>
                       <span>•</span>
-                      <span className="text-cyan-400 font-semibold">CGPA: 9.11/10</span>
+                      <span className="text-foreground font-semibold">CGPA: 9.11/10</span>
                     </div>
                   </div>
                 </div>
@@ -461,25 +472,25 @@ export default function Home() {
                 <motion.div
                   variants={fadeInUp}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.02] group"
+                  className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                      <Award className="w-6 h-6 text-cyan-400" />
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-muted rounded-lg border border-border">
+                      <Award className="w-5 h-5 text-foreground" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-slate-100 mb-3">Certifications</h3>
-                      <ul className="space-y-2 text-slate-300">
+                      <h3 className="text-lg font-bold text-foreground mb-3">Certifications</h3>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
                         <li className="flex gap-2">
-                          <span className="text-cyan-400 mt-1">•</span>
+                          <span className="text-foreground/50 mt-0.5">•</span>
                           <span>Frontend Domination (Sheryians)</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="text-cyan-400 mt-1">•</span>
+                          <span className="text-foreground/50 mt-0.5">•</span>
                           <span>J.P. Morgan Software Engineering</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="text-cyan-400 mt-1">•</span>
+                          <span className="text-foreground/50 mt-0.5">•</span>
                           <span>J.P. Morgan Agile Program</span>
                         </li>
                       </ul>
@@ -490,21 +501,21 @@ export default function Home() {
                 <motion.div
                   variants={fadeInUp}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.02] group"
+                  className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                      <Award className="w-6 h-6 text-cyan-400" />
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-muted rounded-lg border border-border">
+                      <Award className="w-5 h-5 text-foreground" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-slate-100 mb-3">Memberships</h3>
-                      <ul className="space-y-2 text-slate-300">
+                      <h3 className="text-lg font-bold text-foreground mb-3">Memberships</h3>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
                         <li className="flex gap-2">
-                          <span className="text-cyan-400 mt-1">•</span>
+                          <span className="text-foreground/50 mt-0.5">•</span>
                           <span>Member of IEEE</span>
                         </li>
                         <li className="flex gap-2">
-                          <span className="text-cyan-400 mt-1">•</span>
+                          <span className="text-foreground/50 mt-0.5">•</span>
                           <span>Member of Google Developers Club</span>
                         </li>
                       </ul>
@@ -512,132 +523,139 @@ export default function Home() {
                   </div>
                 </motion.div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </section>
 
-        <section id="contact" className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeInUp}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                Get In Touch
-              </h2>
-              <p className="text-slate-400 text-center mb-12 max-w-2xl mx-auto">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-              </p>
+        <div className="py-12">
+          <div className="flex items-center gap-2 justify-center">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <div key={i} className="w-1 h-1 rounded-full bg-foreground/20" />
+            ))}
+          </div>
+        </div>
 
-              <div className="grid md:grid-cols-2 gap-8 mb-12">
-                <motion.a
-                  href="mailto:iamrohitkandpal@gmail.com"
-                  variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.1 }}
-                  className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.05] group flex items-center gap-4"
-                >
-                  <div className="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                    <Mail className="w-6 h-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-400 mb-1">Email</p>
-                    <p className="text-slate-100 font-semibold">iamrohitkandpal@gmail.com</p>
-                  </div>
-                </motion.a>
+        <section id="contact" className="py-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+            className="max-w-2xl mx-auto"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center text-foreground">
+              Get In Touch
+            </h2>
+            <p className="text-muted-foreground text-center mb-12 leading-relaxed">
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+            </p>
 
-                <motion.a
-                  href="tel:+917567054535"
-                  variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:scale-[1.05] group flex items-center gap-4"
-                >
-                  <div className="p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/30 group-hover:bg-cyan-500/20 transition-colors duration-300">
-                    <Phone className="w-6 h-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-400 mb-1">Phone</p>
-                    <p className="text-slate-100 font-semibold">+91-7567054535</p>
-                  </div>
-                </motion.a>
-              </div>
-
-              <motion.form
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+              <motion.a
+                href="mailto:iamrohitkandpal@gmail.com"
                 variants={fadeInUp}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                onSubmit={handleSubmit}
-                className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10"
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="bg-card border border-dashed border-border rounded-xl p-4 hover:border-solid transition-all flex items-center gap-3"
               >
-                <div className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
-                      Name
-                    </label>
-                    <Input
-                      id="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="bg-slate-800/50 border-slate-700 focus:border-cyan-500 text-slate-100 placeholder:text-slate-500"
-                      placeholder="Your name"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
-                      Email
-                    </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="bg-slate-800/50 border-slate-700 focus:border-cyan-500 text-slate-100 placeholder:text-slate-500"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
-                      Message
-                    </label>
-                    <Textarea
-                      id="message"
-                      required
-                      rows={5}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="bg-slate-800/50 border-slate-700 focus:border-cyan-500 text-slate-100 placeholder:text-slate-500 resize-none"
-                      placeholder="Your message..."
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-600/30 hover:shadow-xl hover:shadow-cyan-500/40 transition-all duration-300 hover:scale-[1.02]"
-                    size="lg"
-                  >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                  </Button>
+                <div className="p-2 bg-muted rounded-lg border border-border">
+                  <Mail className="w-5 h-5 text-foreground" />
                 </div>
-              </motion.form>
-            </motion.div>
-          </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-0.5">Email</p>
+                  <p className="text-sm text-foreground font-medium">iamrohitkandpal@gmail.com</p>
+                </div>
+              </motion.a>
+
+              <motion.a
+                href="tel:+917567054535"
+                variants={fadeInUp}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-card border border-dashed border-border rounded-xl p-4 hover:border-solid transition-all flex items-center gap-3"
+              >
+                <div className="p-2 bg-muted rounded-lg border border-border">
+                  <Phone className="w-5 h-5 text-foreground" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-0.5">Phone</p>
+                  <p className="text-sm text-foreground font-medium">+91-7567054535</p>
+                </div>
+              </motion.a>
+            </div>
+
+            <motion.form
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              onSubmit={handleSubmit}
+              className="bg-card border border-dashed border-border rounded-xl p-8 hover:border-solid transition-all"
+            >
+              <div className="space-y-5">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                    Name
+                  </label>
+                  <Input
+                    id="name"
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="bg-background border-border focus:border-foreground"
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                    Email
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="bg-background border-border focus:border-foreground"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                    Message
+                  </label>
+                  <Textarea
+                    id="message"
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="bg-background border-border focus:border-foreground resize-none"
+                    placeholder="Your message..."
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-full"
+                  size="lg"
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </Button>
+              </div>
+            </motion.form>
+          </motion.div>
         </section>
 
-        <footer className="py-8 px-4 border-t border-slate-800">
-          <div className="max-w-6xl mx-auto text-center">
-            <p className="text-slate-400">
+        <footer className="py-12 border-t border-border/50 mt-20">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Rohit Navinchandra Kandpal. All rights reserved.
             </p>
           </div>
         </footer>
-      </div>
+      </main>
     </div>
   );
 }
