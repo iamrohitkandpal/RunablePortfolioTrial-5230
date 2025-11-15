@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Github, 
   Linkedin, 
@@ -11,17 +12,19 @@ import {
   Award,
   ChevronLeft,
   ChevronRight,
-  X
+  ArrowRight,
+  Sparkles,
+  Code2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { projects } from '@/data/projects';
 
 const skills = {
-  'Programming Languages': ['JavaScript', 'TypeScript', 'Python', 'C', 'C++', 'Java', 'SQL'],
-  'Frameworks & Technologies': ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'Redux', 'Tailwind CSS', 'Bootstrap', 'Next.js'],
-  'Tools & Platforms': ['Git', 'GitHub', 'Docker', 'AWS', 'Nginx', 'Redis', 'Postman', 'VS Code', 'Linux']
+  'Programming Languages': ['JavaScript', 'Python', 'GoLang', 'SQL', 'Java', 'C/C++'],
+  'Frameworks & Technologies': ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Bootstrap', 'Socket.io', 'API Integration', 'MySQL', 'Next.js', 'Angular', 'Django'],
+  'Tools & Platforms': ['Git', 'GitHub', 'AWS', 'Google Cloud', 'Kali Linux', 'Jupyter Notebook', 'Figma']
 };
 
 const experiences = [
@@ -58,77 +61,26 @@ const experiences = [
   }
 ];
 
-const projects = [
-  {
-    title: 'KrishnaCrypt',
-    period: 'Apr 2025 – Jun 2025',
-    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'JWT'],
-    description: 'Developed a secure real-time chat platform with custom SPN-AES encryption and JWT authentication.',
-    fullDescription: 'Developed a secure real-time chat platform with custom SPN-AES encryption and JWT authentication. Engineered 10ms message latency for 500+ concurrent users using WebSockets and optimized DB queries.',
-    flow: 'User Authentication → Secure Socket Connection → Message Encryption (SPN-AES) → Real-time Transmission → Decryption → Display',
-    achievements: [
-      'Achieved 10ms average message latency for 500+ concurrent users',
-      'Implemented custom SPN-AES encryption algorithm',
-      'Optimized database queries reducing response time by 60%',
-      'Built RESTful APIs with JWT-based authentication'
-    ],
-    github: '#',
-    demo: '#',
-    image: '/hero-avatar.png'
-  },
-  {
-    title: 'Rakshak - DDoS Protection System',
-    period: 'Dec 2024 – Mar 2025',
-    stack: ['Node.js', 'Nginx', 'AWS', 'Redis', 'MongoDB'],
-    description: 'Built a real-time DDoS mitigation system with IP logging, rate limiting, and honeypot integration.',
-    fullDescription: 'Built a real-time DDoS mitigation system with IP logging, rate limiting, and honeypot integration. Deployed load balancing on AWS EC2, improving request handling throughput by 40%.',
-    flow: 'Traffic Analysis → Rate Limiting → IP Reputation Check → Honeypot Detection → Load Balancer → Application Server',
-    achievements: [
-      'Improved request handling throughput by 40% with load balancing',
-      'Implemented Redis-based rate limiting for real-time traffic control',
-      'Integrated honeypot system for advanced threat detection',
-      'Deployed on AWS EC2 with auto-scaling capabilities'
-    ],
-    github: '#',
-    demo: '#',
-    image: '/hero-avatar.png'
-  },
-  {
-    title: 'Aakash Vaani - Voice-Based Mapping System',
-    period: 'Sep 2024 – Dec 2024',
-    stack: ['JavaScript', 'Leaflet.js', 'Web Speech API'],
-    description: 'Built a voice-controlled mapping app integrating OpenStreetMap, Bhuvan, and NASA APIs.',
-    fullDescription: 'Built a voice-controlled mapping app integrating OpenStreetMap, Bhuvan, and NASA APIs for real-time navigation. Enabled natural voice commands and accessibility features.',
-    flow: 'Voice Input → Speech Recognition → Command Processing → API Integration → Map Rendering → Audio Feedback',
-    achievements: [
-      'Integrated 3 mapping APIs (OpenStreetMap, Bhuvan, NASA)',
-      'Implemented Web Speech API for natural voice commands',
-      'Built accessibility features for visually impaired users',
-      'Real-time location tracking and navigation guidance'
-    ],
-    github: '#',
-    demo: '#',
-    image: '/hero-avatar.png'
-  }
-];
-
 const certifications = [
   {
     title: 'Frontend Domination',
     issuer: 'Sheryians',
     date: '2024',
+    description: 'Built advanced web interfaces and animations using React and modern CSS.',
     icon: Award
   },
   {
     title: 'Software Engineering Virtual Experience',
     issuer: 'J.P. Morgan',
     date: '2024',
+    description: 'Resolved data feed issues and implemented live stock data visualization using Python.',
     icon: Award
   },
   {
     title: 'Agile Job Simulation',
     issuer: 'J.P. Morgan',
     date: '2024',
+    description: 'Learned Agile frameworks, drafted user stories, and simulated sprint review sessions.',
     icon: Award
   }
 ];
@@ -138,12 +90,14 @@ const memberships = [
     title: 'Member of IEEE',
     organization: 'Institute of Electrical and Electronics Engineers',
     date: '2023 - Present',
+    description: 'Active member participating in technical workshops and research initiatives.',
     icon: Award
   },
   {
     title: 'Member of Google Developers Club',
     organization: 'Google Developers',
     date: '2023 - Present',
+    description: 'Contributing to community events and collaborative development projects.',
     icon: Award
   }
 ];
@@ -154,8 +108,12 @@ const fadeInUp = {
 };
 
 export default function Home() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentExpIndex, setCurrentExpIndex] = useState(0);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const projectsPerPage = 3;
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -171,17 +129,96 @@ export default function Home() {
     setIsSubmitting(false);
   };
 
+  const nextExperience = () => {
+    setCurrentExpIndex((prev) => (prev + 1) % experiences.length);
+  };
+
+  const prevExperience = () => {
+    setCurrentExpIndex((prev) => (prev - 1 + experiences.length) % experiences.length);
+  };
+
+  const nextProjects = () => {
+    setCurrentProjectIndex((prev) => 
+      Math.min(prev + projectsPerPage, projects.length - projectsPerPage)
+    );
+  };
+
+  const prevProjects = () => {
+    setCurrentProjectIndex((prev) => Math.max(prev - projectsPerPage, 0));
+  };
+
+  const displayedProjects = projects.slice(currentProjectIndex, currentProjectIndex + projectsPerPage);
+  const canGoPrev = currentProjectIndex > 0;
+  const canGoNext = currentProjectIndex + projectsPerPage < projects.length;
+
   return (
-    <div className="min-h-screen gradient-bg">
-      <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b border-border/50">
-        <div className="max-w-[1055px] mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="font-semibold text-lg text-foreground">RK</div>
-          <div className="flex gap-3">
+    <div className="min-h-screen gradient-bg relative overflow-hidden">
+      {/* Animated background effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Light beam effect - more spread out and natural */}
+        <div className="absolute top-0 left-[15%] w-px h-full bg-gradient-to-b from-foreground/15 via-transparent to-transparent" />
+        <div className="absolute top-0 left-[35%] w-px h-full bg-gradient-to-b from-foreground/8 via-transparent to-transparent" />
+        <div className="absolute top-0 right-[30%] w-px h-full bg-gradient-to-b from-foreground/12 via-transparent to-transparent" />
+        <div className="absolute top-0 right-[10%] w-px h-full bg-gradient-to-b from-foreground/10 via-transparent to-transparent" />
+        
+        {/* Subtle glow orbs */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.08, 0.15, 0.08],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/3 -left-32 w-64 h-64 bg-foreground/5 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.12, 0.2, 0.12],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute bottom-1/3 -right-32 w-96 h-96 bg-foreground/5 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.06, 0.12, 0.06],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-2/3 left-1/4 w-72 h-72 bg-foreground/4 rounded-full blur-3xl"
+        />
+      </div>
+
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-background/70 border-b border-border/50">
+        <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="font-bold text-xl text-foreground"
+          >
+            RK
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex gap-3"
+          >
             <a 
               href="https://github.com/iamrohitkandpal" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-all hover:scale-110"
               aria-label="GitHub Profile"
             >
               <Github className="w-5 h-5" />
@@ -190,113 +227,194 @@ export default function Home() {
               href="https://linkedin.com/in/rohit-kandpal" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-all hover:scale-110"
               aria-label="LinkedIn Profile"
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a 
               href="mailto:iamrohitkandpal@gmail.com"
-              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-all hover:scale-110"
               aria-label="Email"
             >
               <Mail className="w-5 h-5" />
             </a>
-          </div>
+          </motion.div>
         </div>
       </header>
 
-      <main className="max-w-[1055px] mx-auto px-6">
-        <section id="hero" className="min-h-[calc(100vh-73px)] flex items-center justify-center py-20">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl"
-          >
-            <motion.div 
-              className="inline-block mb-3"
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.1 }}
+      <main className="max-w-[1200px] mx-auto px-6 relative z-10">
+        {/* Hero Section - Redesigned */}
+        <section id="hero" className="min-h-[calc(100vh-73px)] flex items-center py-20">
+          <div className="grid md:grid-cols-2 gap-12 items-center w-full">
+            {/* Left side - Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              <div className="w-12 h-0.5 bg-foreground/30 mb-6 mx-auto" />
-            </motion.div>
-
-            <motion.p 
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm tracking-wider text-muted-foreground mb-4 uppercase"
-            >
-              Hello, I am
-            </motion.p>
-
-            <motion.h1 
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-6xl md:text-8xl font-bold mb-6 text-foreground tracking-tight leading-tight"
-            >
-              Rohit Navinchandra Kandpal
-            </motion.h1>
-
-            <motion.p 
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-xl md:text-2xl text-foreground/90 font-medium mb-6"
-            >
-              Full Stack Developer
-            </motion.p>
-
-            <motion.p 
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-muted-foreground leading-relaxed mb-12 max-w-2xl mx-auto"
-            >
-              A passionate developer and lifelong learner, dedicated to crafting secure and scalable web applications and exploring the ever-evolving world of technology.
-            </motion.p>
-
-            <motion.div 
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex gap-4 justify-center mb-8"
-            >
-              <Button 
-                size="lg"
-                onClick={() => scrollToSection('projects')}
-                className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8"
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="flex items-center gap-3 mb-6"
               >
-                Explore my projects
-              </Button>
+                <div className="w-12 h-px bg-foreground/30" />
+                <span className="text-sm tracking-widest text-muted-foreground uppercase">
+                  Portfolio 2025
+                </span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+              >
+                <span className="text-foreground">Rohit</span>
+                <br />
+                <span className="text-foreground/70">Kandpal</span>
+              </motion.h1>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="mb-8"
+              >
+                <p className="text-2xl md:text-3xl font-semibold text-foreground/90 mb-3">
+                  Full Stack Developer
+                </p>
+                <p className="text-muted-foreground leading-relaxed max-w-xl">
+                  Crafting secure and scalable web applications with expertise in MERN stack, 
+                  cloud technologies, and cybersecurity. Passionate about building solutions 
+                  that make a difference.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="flex flex-wrap gap-4"
+              >
+                <Button 
+                  size="lg"
+                  onClick={() => scrollToSection('projects')}
+                  className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8 group"
+                >
+                  View Projects
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <Button 
+                  size="lg"
+                  variant="outline"
+                  onClick={() => scrollToSection('contact')}
+                  className="rounded-full px-8"
+                >
+                  Get In Touch
+                </Button>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="flex items-center gap-4 mt-8 text-sm text-muted-foreground"
+              >
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  <span>15+ Projects Shipped</span>
+                </div>
+                <div className="w-px h-4 bg-border" />
+                <span>🇮🇳 Based in India</span>
+              </motion.div>
             </motion.div>
 
-            <motion.p 
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="text-sm text-muted-foreground italic flex items-center gap-2 justify-center"
+            {/* Right side - Animated visual element */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="hidden md:block relative"
             >
-              Already shipped 15+ projects 🇮🇳 IND
-            </motion.p>
+              <div className="relative w-full aspect-square">
+                {/* Animated code blocks */}
+                <motion.div
+                  animate={{
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute top-0 right-0 w-48 h-32 bg-card border border-border rounded-lg p-4 backdrop-blur-sm"
+                >
+                  <Code2 className="w-6 h-6 mb-2 text-foreground/70" />
+                  <div className="space-y-2">
+                    <div className="h-2 bg-foreground/20 rounded w-3/4" />
+                    <div className="h-2 bg-foreground/10 rounded w-1/2" />
+                    <div className="h-2 bg-foreground/20 rounded w-2/3" />
+                  </div>
+                </motion.div>
 
-            <motion.div 
-              variants={fadeInUp}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="flex gap-1 justify-center mt-8"
-            >
-              {[1, 2, 3].map((_, i) => (
-                <div key={i} className="w-1.5 h-1.5 rounded-full bg-foreground/30" />
-              ))}
+                <motion.div
+                  animate={{
+                    y: [0, 10, 0],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                  className="absolute bottom-0 left-0 w-56 h-40 bg-card border border-border rounded-lg p-4 backdrop-blur-sm"
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-3 h-3 rounded-full bg-green-500/30" />
+                    <span className="text-xs text-muted-foreground">Active</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-2 bg-foreground/20 rounded w-full" />
+                    <div className="h-2 bg-foreground/10 rounded w-4/5" />
+                    <div className="h-2 bg-foreground/20 rounded w-3/5" />
+                    <div className="h-2 bg-foreground/10 rounded w-2/3" />
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  animate={{
+                    rotate: [0, 5, -5, 0],
+                  }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute top-1/2 right-1/4 w-32 h-32 bg-gradient-to-br from-foreground/10 to-transparent rounded-full blur-2xl"
+                />
+              </div>
             </motion.div>
-          </motion.div>
+          </div>
         </section>
 
+        {/* Divider */}
         <div className="py-12">
           <div className="flex items-center gap-2 justify-center">
             {[1, 2, 3, 4, 5].map((_, i) => (
-              <div key={i} className="w-1 h-1 rounded-full bg-foreground/20" />
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.1 }}
+                className="w-1 h-1 rounded-full bg-foreground/20" 
+              />
             ))}
           </div>
         </div>
 
+        {/* About Section */}
         <section id="about" className="py-20">
           <motion.div
             initial="hidden"
@@ -312,7 +430,7 @@ export default function Home() {
             <motion.div 
               variants={fadeInUp}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="bg-card border border-dashed border-border rounded-xl p-8 mb-12 max-w-3xl mx-auto"
+              className="bg-card border border-dashed border-border rounded-xl p-8 mb-12 max-w-3xl mx-auto hover:border-solid transition-all"
             >
               <p className="text-muted-foreground leading-relaxed">
                 I'm a passionate Full Stack Developer specializing in building secure and scalable web applications. 
@@ -336,12 +454,13 @@ export default function Home() {
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {items.map((skill) => (
-                      <span 
+                      <motion.span 
                         key={skill}
-                        className="px-3 py-1.5 bg-muted text-foreground text-sm rounded-md border border-border hover:bg-accent transition-colors"
+                        whileHover={{ scale: 1.05 }}
+                        className="px-3 py-1.5 bg-muted text-foreground text-sm rounded-md border border-border hover:bg-accent hover:border-solid transition-all cursor-default"
                       >
                         {skill}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </motion.div>
@@ -350,6 +469,7 @@ export default function Home() {
           </motion.div>
         </section>
 
+        {/* Divider */}
         <div className="py-12">
           <div className="flex items-center gap-2 justify-center">
             {[1, 2, 3, 4, 5].map((_, i) => (
@@ -358,6 +478,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Experience Section */}
         <section id="experience" className="py-20">
           <motion.div
             initial="hidden"
@@ -370,38 +491,85 @@ export default function Home() {
               Experience
             </h2>
 
-            <div className="space-y-6 max-w-3xl mx-auto">
-              {experiences.map((exp, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }}
-                  className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
-                >
-                  <div className="flex items-start gap-3 mb-4">
-                    <div className="p-2 bg-muted rounded-lg border border-border">
-                      <Briefcase className="w-5 h-5 text-foreground" />
+            <div className="max-w-3xl mx-auto">
+              <div className="relative">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentExpIndex}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
+                  >
+                    <div className="flex items-start gap-3 mb-4">
+                      <div className="p-2 bg-muted rounded-lg border border-border">
+                        <Briefcase className="w-5 h-5 text-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-foreground mb-1">{experiences[currentExpIndex].role}</h3>
+                        <p className="text-muted-foreground font-medium mb-0.5">{experiences[currentExpIndex].company}</p>
+                        <p className="text-sm text-muted-foreground">{experiences[currentExpIndex].location} • {experiences[currentExpIndex].period}</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-foreground mb-1">{exp.role}</h3>
-                      <p className="text-muted-foreground font-medium mb-0.5">{exp.company}</p>
-                      <p className="text-sm text-muted-foreground">{exp.location} • {exp.period}</p>
-                    </div>
-                  </div>
-                  <ul className="space-y-2 ml-11">
-                    {exp.achievements.map((achievement, i) => (
-                      <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
-                        <span className="text-foreground/50 mt-1 flex-shrink-0">•</span>
-                        <span>{achievement}</span>
-                      </li>
+                    <ul className="space-y-2 ml-11">
+                      {experiences[currentExpIndex].achievements.map((achievement, i) => (
+                        <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
+                          <span className="text-foreground/50 mt-1 flex-shrink-0">•</span>
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Carousel Controls */}
+                <div className="flex items-center justify-between mt-6">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={prevExperience}
+                    className="rounded-full hover:scale-110 transition-transform"
+                    aria-label="Previous experience"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </Button>
+
+                  <div className="flex gap-2">
+                    {experiences.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentExpIndex(idx)}
+                        className={`h-2 rounded-full transition-all ${
+                          idx === currentExpIndex 
+                            ? 'bg-foreground w-8' 
+                            : 'bg-foreground/30 w-2'
+                        }`}
+                        aria-label={`Go to experience ${idx + 1}`}
+                      />
                     ))}
-                  </ul>
-                </motion.div>
-              ))}
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={nextExperience}
+                    className="rounded-full hover:scale-110 transition-transform"
+                    aria-label="Next experience"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </Button>
+                </div>
+
+                <p className="text-center text-sm text-muted-foreground mt-4">
+                  {currentExpIndex + 1} of {experiences.length}
+                </p>
+              </div>
             </div>
           </motion.div>
         </section>
 
+        {/* Divider */}
         <div className="py-12">
           <div className="flex items-center gap-2 justify-center">
             {[1, 2, 3, 4, 5].map((_, i) => (
@@ -410,6 +578,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Projects Section - Redesigned */}
         <section id="projects" className="py-20">
           <motion.div
             initial="hidden"
@@ -418,73 +587,126 @@ export default function Home() {
             variants={fadeInUp}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-foreground">
-              Featured Projects
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-              {projects.map((project, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }}
-                  className="bg-card border border-dashed border-border rounded-xl overflow-hidden hover:border-solid transition-all group"
+            <div className="flex justify-between items-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+                Featured Projects
+              </h2>
+              
+              {/* Carousel Navigation */}
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={prevProjects}
+                  disabled={!canGoPrev}
+                  className="rounded-full hover:scale-110 transition-transform disabled:opacity-30"
+                  aria-label="Previous projects"
                 >
-                  <div className="aspect-video bg-muted overflow-hidden">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-foreground/80 transition-colors">
-                        {project.title}
-                      </h3>
-                      <span className="text-xs text-muted-foreground whitespace-nowrap ml-2">{project.period}</span>
-                    </div>
+                  <ChevronLeft className="w-5 h-5" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={nextProjects}
+                  disabled={!canGoNext}
+                  className="rounded-full hover:scale-110 transition-transform disabled:opacity-30"
+                  aria-label="Next projects"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </Button>
+              </div>
+            </div>
 
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                      {project.description}
-                    </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              <AnimatePresence mode="popLayout">
+                {displayedProjects.map((project, idx) => (
+                  <motion.div
+                    key={project.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3, delay: idx * 0.1 }}
+                    className="bg-card border border-dashed border-border rounded-xl overflow-hidden hover:border-solid transition-all group flex flex-col h-full"
+                  >
+                    {/* Card Content - Fixed Layout */}
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-foreground/80 transition-colors">
+                          {project.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {project.subtitle}
+                        </p>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.stack.map((tech) => (
-                        <span 
-                          key={tech}
-                          className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded border border-border"
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.stack.slice(0, 3).map((tech) => (
+                            <span 
+                              key={tech}
+                              className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded border border-border"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {project.stack.length > 3 && (
+                            <span className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded border border-border">
+                              +{project.stack.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Buttons - Always at bottom */}
+                      <div className="flex gap-3 mt-auto pt-4">
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 text-sm bg-muted text-foreground rounded-md border border-border hover:bg-accent transition-all flex-1"
+                          aria-label={`View ${project.title} on GitHub`}
                         >
-                          {tech}
-                        </span>
-                      ))}
+                          <Github className="w-4 h-4" />
+                          Code
+                        </a>
+                        <button
+                          onClick={() => navigate(`/project/${project.id}`)}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 text-sm bg-foreground text-background rounded-md hover:bg-foreground/90 transition-all flex-1 group/btn"
+                          aria-label={`View ${project.title} details`}
+                        >
+                          Details
+                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </button>
+                      </div>
                     </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
 
-                    <div className="flex gap-3">
-                      <a
-                        href={project.github}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-muted text-foreground rounded-md border border-border hover:bg-accent transition-colors"
-                        aria-label={`View ${project.title} on GitHub`}
-                      >
-                        <Github className="w-4 h-4" />
-                        Code
-                      </a>
-                      <a
-                        href={project.demo}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-foreground text-background rounded-md hover:bg-foreground/90 transition-colors"
-                        aria-label={`View ${project.title} demo`}
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        Demo
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+            {/* Pagination Indicators */}
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: Math.ceil(projects.length / projectsPerPage) }).map((_, idx) => {
+                const pageStart = idx * projectsPerPage;
+                const isActive = currentProjectIndex === pageStart;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentProjectIndex(pageStart)}
+                    className={`h-2 rounded-full transition-all ${
+                      isActive 
+                        ? 'bg-foreground w-8' 
+                        : 'bg-foreground/30 w-2 hover:bg-foreground/50'
+                    }`}
+                    aria-label={`Go to projects page ${idx + 1}`}
+                  />
+                );
+              })}
             </div>
           </motion.div>
         </section>
 
+        {/* Divider */}
         <div className="py-12">
           <div className="flex items-center gap-2 justify-center">
             {[1, 2, 3, 4, 5].map((_, i) => (
@@ -493,6 +715,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Education & Achievements Section */}
         <section id="education" className="py-20">
           <motion.div
             initial="hidden"
@@ -505,7 +728,8 @@ export default function Home() {
               Education & Achievements
             </h2>
 
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-5xl mx-auto space-y-6">
+              {/* Education */}
               <motion.div
                 variants={fadeInUp}
                 transition={{ duration: 0.6, delay: 0.1 }}
@@ -532,65 +756,79 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <motion.div
-                  variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-muted rounded-lg border border-border">
-                      <Award className="w-5 h-5 text-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-foreground mb-3">Certifications</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex gap-2">
-                          <span className="text-foreground/50 mt-0.5">•</span>
-                          <span>Frontend Domination (Sheryians)</span>
-                        </li>
-                        <li className="flex gap-2">
-                          <span className="text-foreground/50 mt-0.5">•</span>
-                          <span>J.P. Morgan Software Engineering</span>
-                        </li>
-                        <li className="flex gap-2">
-                          <span className="text-foreground/50 mt-0.5">•</span>
-                          <span>J.P. Morgan Agile Program</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
+              {/* Certifications Grid */}
+              <div>
+                <h3 className="text-2xl font-bold mb-6 text-foreground">Certifications</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {certifications.map((cert, idx) => (
+                    <motion.div
+                      key={idx}
+                      variants={fadeInUp}
+                      transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                      className="bg-card border border-dashed border-border rounded-xl p-5 hover:border-solid transition-all group"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 bg-muted rounded-lg border border-border group-hover:bg-accent transition-all">
+                          <Award className="w-4 h-4 text-foreground" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground mb-1 text-sm">
+                            {cert.title}
+                          </h4>
+                          <p className="text-xs text-muted-foreground mb-2">
+                            {cert.issuer} • {cert.date}
+                          </p>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            {cert.description}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
 
-                <motion.div
-                  variants={fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-muted rounded-lg border border-border">
-                      <Award className="w-5 h-5 text-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-foreground mb-3">Memberships</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex gap-2">
-                          <span className="text-foreground/50 mt-0.5">•</span>
-                          <span>Member of IEEE</span>
-                        </li>
-                        <li className="flex gap-2">
-                          <span className="text-foreground/50 mt-0.5">•</span>
-                          <span>Member of Google Developers Club</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
+              {/* Memberships Grid */}
+              <div>
+                <h3 className="text-2xl font-bold mb-6 text-foreground">Memberships</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {memberships.map((member, idx) => (
+                    <motion.div
+                      key={idx}
+                      variants={fadeInUp}
+                      transition={{ duration: 0.6, delay: 0.3 + idx * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                      className="bg-card border border-dashed border-border rounded-xl p-5 hover:border-solid transition-all group"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 bg-muted rounded-lg border border-border group-hover:bg-accent transition-all">
+                          <Award className="w-4 h-4 text-foreground" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground mb-1">
+                            {member.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            {member.organization}
+                          </p>
+                          <p className="text-xs text-muted-foreground mb-2">
+                            {member.date}
+                          </p>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            {member.description}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
         </section>
 
+        {/* Divider */}
         <div className="py-12">
           <div className="flex items-center gap-2 justify-center">
             {[1, 2, 3, 4, 5].map((_, i) => (
@@ -599,6 +837,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Contact Section */}
         <section id="contact" className="py-20">
           <motion.div
             initial="hidden"
@@ -620,6 +859,7 @@ export default function Home() {
                 href="mailto:iamrohitkandpal@gmail.com"
                 variants={fadeInUp}
                 transition={{ duration: 0.6, delay: 0.1 }}
+                whileHover={{ scale: 1.02 }}
                 className="bg-card border border-dashed border-border rounded-xl p-4 hover:border-solid transition-all flex items-center gap-3"
               >
                 <div className="p-2 bg-muted rounded-lg border border-border">
@@ -635,6 +875,7 @@ export default function Home() {
                 href="tel:+917567054535"
                 variants={fadeInUp}
                 transition={{ duration: 0.6, delay: 0.2 }}
+                whileHover={{ scale: 1.02 }}
                 className="bg-card border border-dashed border-border rounded-xl p-4 hover:border-solid transition-all flex items-center gap-3"
               >
                 <div className="p-2 bg-muted rounded-lg border border-border">
@@ -664,7 +905,7 @@ export default function Home() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="bg-background border-border focus:border-foreground"
+                    className="bg-background border-border focus:border-foreground transition-all"
                     placeholder="Your name"
                   />
                 </div>
@@ -679,7 +920,7 @@ export default function Home() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="bg-background border-border focus:border-foreground"
+                    className="bg-background border-border focus:border-foreground transition-all"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -694,7 +935,7 @@ export default function Home() {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="bg-background border-border focus:border-foreground resize-none"
+                    className="bg-background border-border focus:border-foreground resize-none transition-all"
                     placeholder="Your message..."
                   />
                 </div>
@@ -702,16 +943,18 @@ export default function Home() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-full"
+                  className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-full group"
                   size="lg"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {!isSubmitting && <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />}
                 </Button>
               </div>
             </motion.form>
           </motion.div>
         </section>
 
+        {/* Footer */}
         <footer className="py-12 border-t border-border/50 mt-20">
           <div className="text-center">
             <p className="text-sm text-muted-foreground">

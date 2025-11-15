@@ -7,6 +7,7 @@ import Dashboard from "@/pages/dashboard";
 import Home from "@/pages/home";
 import SignIn from "@/pages/sign-in";
 import SignUp from "@/pages/sign-up";
+import ProjectDetail from "@/pages/project-detail";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export function App() {
@@ -14,6 +15,9 @@ export function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        
+        {/* Project routes */}
+        <Route path="/project/:projectId" element={<ProjectDetail />} />
 
         {/* Authentication routes */}
         <Route path="/signin" element={<SignIn />} />
