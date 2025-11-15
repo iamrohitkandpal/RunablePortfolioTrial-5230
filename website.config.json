@@ -1,14 +1,14 @@
 {
   "site": {
-    "name": "Minimal Starter",
-    "tagline": "Your Creative Canvas",
-    "description": "A clean, minimal starter template providing the perfect foundation for your next project. Built with modern tools and ready for your creativity.",
-    "ogImage": "/og-image.png",
+    "name": "Rohit Navinchandra Kandpal",
+    "tagline": "Full Stack Developer",
+    "description": "Building secure and scalable web applications with strong fundamentals in system design and cybersecurity. Experienced in React, Node.js, and cloud technologies.",
+    "ogImage": "/hero-avatar.png",
     "twitterHandle": "",
     "contact": {
-      "email": "contact@example.com",
-      "company": "Your Company",
-      "address": ""
+      "email": "iamrohitkandpal@gmail.com",
+      "company": "Rohit Kandpal",
+      "address": "Ahmedabad, Gujarat"
     },
     "legal": {
       "privacyPolicy": "/privacy",
