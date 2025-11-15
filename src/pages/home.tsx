@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Github, 
   Linkedin, 
@@ -8,11 +8,15 @@ import {
   ExternalLink,
   Briefcase,
   GraduationCap,
-  Award
+  Award,
+  ChevronLeft,
+  ChevronRight,
+  X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const skills = {
   'Programming Languages': ['JavaScript', 'TypeScript', 'Python', 'C', 'C++', 'Java', 'SQL'],
@@ -59,7 +63,15 @@ const projects = [
     title: 'KrishnaCrypt',
     period: 'Apr 2025 – Jun 2025',
     stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'JWT'],
-    description: 'Developed a secure real-time chat platform with custom SPN-AES encryption and JWT authentication. Engineered 10ms message latency for 500+ concurrent users using WebSockets and optimized DB queries.',
+    description: 'Developed a secure real-time chat platform with custom SPN-AES encryption and JWT authentication.',
+    fullDescription: 'Developed a secure real-time chat platform with custom SPN-AES encryption and JWT authentication. Engineered 10ms message latency for 500+ concurrent users using WebSockets and optimized DB queries.',
+    flow: 'User Authentication → Secure Socket Connection → Message Encryption (SPN-AES) → Real-time Transmission → Decryption → Display',
+    achievements: [
+      'Achieved 10ms average message latency for 500+ concurrent users',
+      'Implemented custom SPN-AES encryption algorithm',
+      'Optimized database queries reducing response time by 60%',
+      'Built RESTful APIs with JWT-based authentication'
+    ],
     github: '#',
     demo: '#',
     image: '/hero-avatar.png'
@@ -68,7 +80,15 @@ const projects = [
     title: 'Rakshak - DDoS Protection System',
     period: 'Dec 2024 – Mar 2025',
     stack: ['Node.js', 'Nginx', 'AWS', 'Redis', 'MongoDB'],
-    description: 'Built a real-time DDoS mitigation system with IP logging, rate limiting, and honeypot integration. Deployed load balancing on AWS EC2, improving request handling throughput by 40%.',
+    description: 'Built a real-time DDoS mitigation system with IP logging, rate limiting, and honeypot integration.',
+    fullDescription: 'Built a real-time DDoS mitigation system with IP logging, rate limiting, and honeypot integration. Deployed load balancing on AWS EC2, improving request handling throughput by 40%.',
+    flow: 'Traffic Analysis → Rate Limiting → IP Reputation Check → Honeypot Detection → Load Balancer → Application Server',
+    achievements: [
+      'Improved request handling throughput by 40% with load balancing',
+      'Implemented Redis-based rate limiting for real-time traffic control',
+      'Integrated honeypot system for advanced threat detection',
+      'Deployed on AWS EC2 with auto-scaling capabilities'
+    ],
     github: '#',
     demo: '#',
     image: '/hero-avatar.png'
@@ -77,10 +97,54 @@ const projects = [
     title: 'Aakash Vaani - Voice-Based Mapping System',
     period: 'Sep 2024 – Dec 2024',
     stack: ['JavaScript', 'Leaflet.js', 'Web Speech API'],
-    description: 'Built a voice-controlled mapping app integrating OpenStreetMap, Bhuvan, and NASA APIs for real-time navigation. Enabled natural voice commands and accessibility features.',
+    description: 'Built a voice-controlled mapping app integrating OpenStreetMap, Bhuvan, and NASA APIs.',
+    fullDescription: 'Built a voice-controlled mapping app integrating OpenStreetMap, Bhuvan, and NASA APIs for real-time navigation. Enabled natural voice commands and accessibility features.',
+    flow: 'Voice Input → Speech Recognition → Command Processing → API Integration → Map Rendering → Audio Feedback',
+    achievements: [
+      'Integrated 3 mapping APIs (OpenStreetMap, Bhuvan, NASA)',
+      'Implemented Web Speech API for natural voice commands',
+      'Built accessibility features for visually impaired users',
+      'Real-time location tracking and navigation guidance'
+    ],
     github: '#',
     demo: '#',
     image: '/hero-avatar.png'
+  }
+];
+
+const certifications = [
+  {
+    title: 'Frontend Domination',
+    issuer: 'Sheryians',
+    date: '2024',
+    icon: Award
+  },
+  {
+    title: 'Software Engineering Virtual Experience',
+    issuer: 'J.P. Morgan',
+    date: '2024',
+    icon: Award
+  },
+  {
+    title: 'Agile Job Simulation',
+    issuer: 'J.P. Morgan',
+    date: '2024',
+    icon: Award
+  }
+];
+
+const memberships = [
+  {
+    title: 'Member of IEEE',
+    organization: 'Institute of Electrical and Electronics Engineers',
+    date: '2023 - Present',
+    icon: Award
+  },
+  {
+    title: 'Member of Google Developers Club',
+    organization: 'Google Developers',
+    date: '2023 - Present',
+    icon: Award
   }
 ];
 
