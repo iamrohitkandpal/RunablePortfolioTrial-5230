@@ -1,1 +1,0 @@
-export { SimpleChat } from "./SimpleChat";
