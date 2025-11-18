@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -156,10 +156,10 @@ export default function Home() {
       {/* Animated background effects */}
       <div className="fixed inset-0 pointer-events-none">
         {/* Light beam effect - more spread out and natural */}
-        <div className="absolute top-0 left-[15%] w-px h-full bg-gradient-to-b from-foreground/15 via-transparent to-transparent" />
-        <div className="absolute top-0 left-[35%] w-px h-full bg-gradient-to-b from-foreground/8 via-transparent to-transparent" />
-        <div className="absolute top-0 right-[30%] w-px h-full bg-gradient-to-b from-foreground/12 via-transparent to-transparent" />
-        <div className="absolute top-0 right-[10%] w-px h-full bg-gradient-to-b from-foreground/10 via-transparent to-transparent" />
+        <div className="absolute top-0 left-[15%] w-px h-full bg-linear-to-b from-foreground/15 via-transparent to-transparent" />
+        <div className="absolute top-0 left-[35%] w-px h-full bg-linear-to-b from-foreground/8 via-transparent to-transparent" />
+        <div className="absolute top-0 right-[30%] w-px h-full bg-linear-to-b from-foreground/12 via-transparent to-transparent" />
+        <div className="absolute top-0 right-[10%] w-px h-full bg-linear-to-b from-foreground/10 via-transparent to-transparent" />
         
         {/* Subtle glow orbs */}
         <motion.div
@@ -493,35 +493,40 @@ export default function Home() {
 
             <div className="max-w-3xl mx-auto">
               <div className="relative">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentExpIndex}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
-                  >
-                    <div className="flex items-start gap-3 mb-4">
-                      <div className="p-2 bg-muted rounded-lg border border-border">
-                        <Briefcase className="w-5 h-5 text-foreground" />
+                <div className="min-h-[320px]">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentExpIndex}
+                      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                      transition={{ 
+                        duration: 0.5,
+                        ease: [0.4, 0, 0.2, 1]
+                      }}
+                      className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all"
+                    >
+                      <div className="flex items-start gap-3 mb-4">
+                        <div className="p-2 bg-muted rounded-lg border border-border">
+                          <Briefcase className="w-5 h-5 text-foreground" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-foreground mb-1">{experiences[currentExpIndex].role}</h3>
+                          <p className="text-muted-foreground font-medium mb-0.5">{experiences[currentExpIndex].company}</p>
+                          <p className="text-sm text-muted-foreground">{experiences[currentExpIndex].location} • {experiences[currentExpIndex].period}</p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-foreground mb-1">{experiences[currentExpIndex].role}</h3>
-                        <p className="text-muted-foreground font-medium mb-0.5">{experiences[currentExpIndex].company}</p>
-                        <p className="text-sm text-muted-foreground">{experiences[currentExpIndex].location} • {experiences[currentExpIndex].period}</p>
-                      </div>
-                    </div>
-                    <ul className="space-y-2 ml-11">
-                      {experiences[currentExpIndex].achievements.map((achievement, i) => (
-                        <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
-                          <span className="text-foreground/50 mt-1 flex-shrink-0">•</span>
-                          <span>{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                </AnimatePresence>
+                      <ul className="space-y-2 ml-11">
+                        {experiences[currentExpIndex].achievements.map((achievement, i) => (
+                          <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
+                            <span className="text-foreground/50 mt-1 flex-shrink-0">•</span>
+                            <span>{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
                 {/* Carousel Controls */}
                 <div className="flex items-center justify-between mt-6">
@@ -617,16 +622,19 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              <AnimatePresence mode="popLayout">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto min-h-[400px]">
+              <AnimatePresence mode="wait">
                 {displayedProjects.map((project, idx) => (
                   <motion.div
-                    key={project.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3, delay: idx * 0.1 }}
+                    key={`${currentProjectIndex}-${project.id}`}
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                    transition={{ 
+                      duration: 0.5, 
+                      delay: idx * 0.08,
+                      ease: [0.4, 0, 0.2, 1]
+                    }}
                     className="bg-card border border-dashed border-border rounded-xl overflow-hidden hover:border-solid transition-all group flex flex-col h-full"
                   >
                     {/* Card Content - Fixed Layout */}

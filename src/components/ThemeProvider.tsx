@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { websiteConfig } from "../../website.config";
 
 export type Theme = "light" | "dark";
 
@@ -22,16 +21,14 @@ function applyTheme(theme: Theme) {
 
 function getInitialTheme(): Theme {
   if (typeof window === "undefined") {
-    // Use centralized config for SSR default
-    return websiteConfig.theme.defaultTheme;
+    return "dark"; // Default theme
   }
 
   const storedTheme = window.localStorage.getItem("theme") as Theme | null;
   if (storedTheme === "dark" || storedTheme === "light") {
     return storedTheme;
   }
-  // Use centralized config when no preference stored
-  return websiteConfig.theme.defaultTheme;
+  return "dark"; // Default theme
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -46,7 +43,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     applyTheme(theme);
-  }, []);
+  }, [theme]);
 
   const value = useMemo(
     () => ({
