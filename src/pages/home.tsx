@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -6,7 +6,6 @@ import {
   Linkedin, 
   Mail, 
   Phone, 
-  ExternalLink,
   Briefcase,
   GraduationCap,
   Award,
@@ -21,10 +20,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { projects } from '@/data/projects';
 
+const ParticlesBackground = lazy(() => import('@/components/ParticlesBackground'));
+
 const skills = {
-  'Programming Languages': ['JavaScript', 'Python', 'GoLang', 'SQL', 'Java', 'C/C++'],
-  'Frameworks & Technologies': ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Bootstrap', 'Socket.io', 'API Integration', 'MySQL', 'Next.js', 'Angular', 'Django'],
-  'Tools & Platforms': ['Git', 'GitHub', 'AWS', 'Google Cloud', 'Kali Linux', 'Jupyter Notebook', 'Figma']
+  'Languages': ['JavaScript', 'TypeScript', 'Python', 'Java', 'C/C++'],
+  'Full-Stack & Cloud': ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'Express', 'FastAPI', 'Socket.io', 'MongoDB', 'MySQL', 'Redis', 'Docker', 'AWS', 'Git', 'CI/CD'],
+  'Data & Security': ['Scikit-learn', 'TensorFlow.js', 'Prophet', 'Pandas', 'Hugging Face', 'TextBlob', 'VADER', 'Custom Cryptography', 'OWASP', 'Streamlit', 'Plotly']
 };
 
 const experiences = [
@@ -153,51 +154,61 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gradient-bg relative overflow-hidden">
-      {/* Animated background effects */}
+      <Suspense fallback={null}>
+        <ParticlesBackground />
+      </Suspense>
+      {/* Animated Particle Background */}
+      <ParticlesBackground />
+      
+      {/* Enhanced Animated background effects */}
       <div className="fixed inset-0 pointer-events-none">
-        {/* Light beam effect - more spread out and natural */}
-        <div className="absolute top-0 left-[15%] w-px h-full bg-linear-to-b from-foreground/15 via-transparent to-transparent" />
-        <div className="absolute top-0 left-[35%] w-px h-full bg-linear-to-b from-foreground/8 via-transparent to-transparent" />
-        <div className="absolute top-0 right-[30%] w-px h-full bg-linear-to-b from-foreground/12 via-transparent to-transparent" />
-        <div className="absolute top-0 right-[10%] w-px h-full bg-linear-to-b from-foreground/10 via-transparent to-transparent" />
-        
-        {/* Subtle glow orbs */}
+        {/* Animated gradient orbs with multiple colors */}
         <motion.div
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.08, 0.15, 0.08],
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+            scale: [1, 1.3, 1],
+            opacity: [0.15, 0.25, 0.15],
           }}
           transition={{
-            duration: 8,
+            duration: 15,
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-1/3 -left-32 w-64 h-64 bg-foreground/5 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-linear-to-br from-blue-500/20 via-purple-500/20 to-transparent rounded-full blur-3xl"
         />
         <motion.div
           animate={{
+            x: [0, -80, 0],
+            y: [0, 60, 0],
             scale: [1.2, 1, 1.2],
-            opacity: [0.12, 0.2, 0.12],
+            opacity: [0.2, 0.3, 0.2],
           }}
           transition={{
-            duration: 10,
+            duration: 18,
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute bottom-1/3 -right-32 w-96 h-96 bg-foreground/5 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-linear-to-tl from-pink-500/20 via-indigo-500/20 to-transparent rounded-full blur-3xl"
         />
         <motion.div
           animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.06, 0.12, 0.06],
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+            scale: [1, 1.15, 1],
+            opacity: [0.1, 0.2, 0.1],
           }}
           transition={{
-            duration: 12,
+            duration: 20,
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-2/3 left-1/4 w-72 h-72 bg-foreground/4 rounded-full blur-3xl"
+          className="absolute top-1/2 right-1/3 w-80 h-80 bg-linear-to-br from-cyan-500/15 via-teal-500/15 to-transparent rounded-full blur-3xl"
         />
+        
+        {/* Subtle light beams */}
+        <div className="absolute top-0 left-[20%] w-px h-full bg-linear-to-b from-foreground/10 via-transparent to-transparent" />
+        <div className="absolute top-0 right-[25%] w-px h-full bg-linear-to-b from-foreground/8 via-transparent to-transparent" />
       </div>
 
       <header className="sticky top-0 z-50 backdrop-blur-md bg-background/70 border-b border-border/50">
@@ -224,7 +235,7 @@ export default function Home() {
               <Github className="w-5 h-5" />
             </a>
             <a 
-              href="https://linkedin.com/in/rohit-kandpal" 
+              href="https://www.linkedin.com/in/rohit-kandpal-" 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-2 hover:bg-muted rounded-lg transition-all hover:scale-110"
@@ -233,11 +244,13 @@ export default function Home() {
               <Linkedin className="w-5 h-5" />
             </a>
             <a 
-              href="mailto:iamrohitkandpal@gmail.com"
+              href="https://leetcode.com/u/rohitkandpal/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-2 hover:bg-muted rounded-lg transition-all hover:scale-110"
-              aria-label="Email"
+              aria-label="LeetCode Profile"
             >
-              <Mail className="w-5 h-5" />
+              <Code2 className="w-5 h-5" />
             </a>
           </motion.div>
         </div>
@@ -285,10 +298,9 @@ export default function Home() {
                 <p className="text-2xl md:text-3xl font-semibold text-foreground/90 mb-3">
                   Full Stack Developer
                 </p>
-                <p className="text-muted-foreground leading-relaxed max-w-xl">
-                  Crafting secure and scalable web applications with expertise in MERN stack, 
-                  cloud technologies, and cybersecurity. Passionate about building solutions 
-                  that make a difference.
+                <p className="text-muted-foreground leading-relaxed max-w-md">
+                  A developer who writes code, breaks things, fixes them, 
+                  and calls it "learning experience."
                 </p>
               </motion.div>
 
@@ -324,7 +336,7 @@ export default function Home() {
               >
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />
-                  <span>15+ Projects Shipped</span>
+                  <span>Open to Opportunities</span>
                 </div>
                 <div className="w-px h-4 bg-border" />
                 <span>🇮🇳 Based in India</span>
@@ -392,7 +404,7 @@ export default function Home() {
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
-                  className="absolute top-1/2 right-1/4 w-32 h-32 bg-gradient-to-br from-foreground/10 to-transparent rounded-full blur-2xl"
+                  className="absolute top-1/2 right-1/4 w-32 h-32 bg-linear-to-br from-foreground/10 to-transparent rounded-full blur-2xl"
                 />
               </div>
             </motion.div>
@@ -432,13 +444,15 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="bg-card border border-dashed border-border rounded-xl p-8 mb-12 max-w-3xl mx-auto hover:border-solid transition-all"
             >
-              <p className="text-muted-foreground leading-relaxed">
-                I'm a passionate Full Stack Developer specializing in building secure and scalable web applications. 
-                With expertise in modern JavaScript frameworks, cloud technologies, and cybersecurity principles, 
-                I create robust solutions that prioritize both performance and security. Currently pursuing B.Tech 
-                in Computer Science with specialization in Cyber Security at Silver Oak College of Engineering & Technology, 
-                maintaining a CGPA of 9.11/10. I'm enthusiastic about system design, real-time applications, and 
-                leveraging cutting-edge technologies to solve complex problems.
+              <p className="text-muted-foreground leading-relaxed text-lg mb-4">
+                I'm a 20-year-old full-stack developer who writes code, Googles errors, and hopes everything compiles before losing motivation.
+              </p>
+              <p className="text-muted-foreground leading-relaxed text-lg mb-4">
+                My workflow? Write code → pray it works → celebrate when it actually does (rare, but magical). 
+                Mostly just trying to make things work without breaking the entire project in the process.
+              </p>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                Professional debugger at 3 AM. If it compiles, it ships. If it doesn't... that's what Stack Overflow is for.
               </p>
             </motion.div>
 
@@ -493,7 +507,7 @@ export default function Home() {
 
             <div className="max-w-3xl mx-auto">
               <div className="relative">
-                <div className="min-h-[320px]">
+                <div className="min-h-80 md:min-h-[280px]">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentExpIndex}
@@ -519,7 +533,7 @@ export default function Home() {
                       <ul className="space-y-2 ml-11">
                         {experiences[currentExpIndex].achievements.map((achievement, i) => (
                           <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
-                            <span className="text-foreground/50 mt-1 flex-shrink-0">•</span>
+                            <span className="text-foreground/50 mt-1 shrink-0">•</span>
                             <span>{achievement}</span>
                           </li>
                         ))}
@@ -963,7 +977,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="py-12 border-t border-border/50 mt-20">
+        <footer className="py-12 border-t border-border/50 mt-20 mb-20 lg:mb-0">
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Rohit Navinchandra Kandpal. All rights reserved.
