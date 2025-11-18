@@ -235,7 +235,7 @@ export default function ProjectDetail() {
                   className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all group"
                 >
                   <div className="flex gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center mt-0.5 group-hover:bg-foreground/20 transition-colors">
+                    <div className="shrink-0 w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center mt-0.5 group-hover:bg-foreground/20 transition-colors">
                       <CheckCircle2 className="w-4 h-4 text-foreground" />
                     </div>
                     <p className="text-muted-foreground leading-relaxed">

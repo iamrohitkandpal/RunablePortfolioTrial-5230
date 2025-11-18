@@ -6,11 +6,12 @@
   "description": "Rohit Kandpal - Full Stack Developer Portfolio",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build", 
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@types/d3": "^7.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

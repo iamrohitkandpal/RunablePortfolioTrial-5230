@@ -1,6 +1,7 @@
 import { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 import { 
   Github, 
   Linkedin, 
@@ -21,6 +22,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { projects } from '@/data/projects';
 
 const ParticlesBackground = lazy(() => import('@/components/ParticlesBackground'));
+
+// Initialize EmailJS
+emailjs.init('_I1bpBsJAXuAacsn7');
 
 const skills = {
   'Languages': ['JavaScript', 'TypeScript', 'Python', 'Java', 'C/C++'],
@@ -112,6 +116,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [currentExpIndex, setCurrentExpIndex] = useState(0);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const projectsPerPage = 3;
@@ -124,10 +129,32 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Form submitted:', formData);
-    setFormData({ name: '', email: '', message: '' });
-    setIsSubmitting(false);
+    setSubmitStatus('idle');
+
+    try {
+      await emailjs.send(
+        'service_ls4qv1f', // Service ID
+        'template_27mfmkn', // Template ID
+        {
+          to_email: 'iamrohitkandpal@gmail.com',
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        }
+      );
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+
+      // Clear success message after 4 seconds
+      setTimeout(() => setSubmitStatus('idle'), 4000);
+    } catch (error) {
+      console.error('Email send failed:', error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 4000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const nextExperience = () => {
@@ -927,6 +954,7 @@ export default function Home() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    disabled={isSubmitting}
                     className="bg-background border-border focus:border-foreground transition-all"
                     placeholder="Your name"
                   />
@@ -942,6 +970,7 @@ export default function Home() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    disabled={isSubmitting}
                     className="bg-background border-border focus:border-foreground transition-all"
                     placeholder="your.email@example.com"
                   />
@@ -957,6 +986,7 @@ export default function Home() {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    disabled={isSubmitting}
                     className="bg-background border-border focus:border-foreground resize-none transition-all"
                     placeholder="Your message..."
                   />
@@ -971,6 +1001,28 @@ export default function Home() {
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                   {!isSubmitting && <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />}
                 </Button>
+
+                {submitStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-green-600 text-sm text-center"
+                  >
+                    ✅ Message sent successfully! I'll get back to you soon.
+                  </motion.div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600 text-sm text-center"
+                  >
+                    ❌ Failed to send message. Please try again or email me directly.
+                  </motion.div>
+                )}
               </div>
             </motion.form>
           </motion.div>
