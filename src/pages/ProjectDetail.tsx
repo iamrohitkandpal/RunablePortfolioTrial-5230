@@ -1,8 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import * as React from 'react';
 import { motion } from 'framer-motion';
 import { Github, ExternalLink, ArrowLeft, Code2, Workflow, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { projects } from '@/data/projects';
+import FlowDiagram from '@/components/FlowDiagram';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -14,6 +16,11 @@ export default function ProjectDetail() {
   const navigate = useNavigate();
   
   const project = projects.find(p => p.id === projectId);
+
+  // Scroll to top when component mounts
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [projectId]);
 
   if (!project) {
     return (
@@ -93,15 +100,35 @@ export default function ProjectDetail() {
                 <Github className="w-5 h-5" />
                 View Source Code
               </a>
-              <a
-                href={project.demo}
-                className="flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors"
-              >
-                <ExternalLink className="w-5 h-5" />
-                Live Demo
-              </a>
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  className="flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  Live Demo
+                </a>
+              )}
             </motion.div>
           </div>
+
+          {/* Project Image */}
+          {project.image && (
+            <motion.div
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mb-12 group"
+            >
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-muted/50 px-6 py-0">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-auto object-contain aspect-video group-hover:scale-105 transition-transform duration-500 rounded-lg"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-background/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+            </motion.div>
+          )}
 
           {/* Overview Section */}
           <motion.section
@@ -114,7 +141,7 @@ export default function ProjectDetail() {
               <h2 className="text-3xl font-bold text-foreground">Overview</h2>
             </div>
             <div className="bg-card border border-dashed border-border rounded-xl p-8 hover:border-solid transition-all">
-              <p className="text-muted-foreground leading-relaxed text-lg">
+              <p className="text-muted-foreground leading-relaxed text-base">
                 {project.fullDescription}
               </p>
             </div>
@@ -152,10 +179,8 @@ export default function ProjectDetail() {
               <Workflow className="w-6 h-6 text-foreground" />
               <h2 className="text-3xl font-bold text-foreground">Project Flow</h2>
             </div>
-            <div className="bg-card border border-dashed border-border rounded-xl p-8 hover:border-solid transition-all">
-              <div className="font-mono text-sm md:text-base text-muted-foreground overflow-x-auto">
-                {project.flow}
-              </div>
+            <div className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all">
+              <FlowDiagram flow={project.flow} />
             </div>
           </motion.section>
 
@@ -166,10 +191,27 @@ export default function ProjectDetail() {
             className="mb-12"
           >
             <h2 className="text-3xl font-bold text-foreground mb-6">Architecture</h2>
-            <div className="bg-card border border-dashed border-border rounded-xl p-8 hover:border-solid transition-all">
-              <p className="text-muted-foreground leading-relaxed">
-                {project.architecture}
-              </p>
+            <div className="bg-card border border-dashed border-border rounded-xl p-6 hover:border-solid transition-all">
+              <div className="space-y-4">
+                {project.architecture.split(/(?=[A-Z][a-z]+:)/).filter(Boolean).map((section, idx) => {
+                  const [title, ...content] = section.split(':');
+                  if (!content.length) return null;
+                  
+                  return (
+                    <div key={idx} className="group">
+                      <div className="flex items-start gap-3">
+                        <div className="shrink-0 w-2 h-2 rounded-full bg-foreground/40 mt-2 group-hover:bg-foreground/60 transition-colors" />
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1 text-sm">{title.trim()}</h3>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {content.join(':').trim()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </motion.section>
 
@@ -216,7 +258,7 @@ export default function ProjectDetail() {
                 Interested in this project?
               </h3>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Check out the source code on GitHub or try the live demo to see it in action.
+                Check out the source code on GitHub{project.demo ? ' or try the live demo to see it in action' : ' to explore the implementation'}.
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
                 <a
@@ -228,13 +270,15 @@ export default function ProjectDetail() {
                   <Github className="w-5 h-5" />
                   View on GitHub
                 </a>
-                <a
-                  href={project.demo}
-                  className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full border border-border hover:bg-accent transition-colors"
-                >
-                  <ExternalLink className="w-5 h-5" />
-                  Try Live Demo
-                </a>
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full border border-border hover:bg-accent transition-colors"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                    Try Live Demo
+                  </a>
+                )}
                 <Button
                   onClick={() => navigate('/#contact')}
                   variant="outline"
