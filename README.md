@@ -1,151 +1,147 @@
-# Minimal Starter
+# Rohit Kandpal - Portfolio
 
-A clean, minimal starter template providing the perfect foundation for your next project. Built with modern tools and ready for your creativity.
+A clean, modern portfolio website showcasing my work as a Full Stack Developer.
 
 ## ✨ Features
 
-- 🚀 **Modern Stack**: React 19, TypeScript, Vite, Tailwind CSS
-- 🎨 **Beautiful UI**: shadcn/ui components with customizable design tokens
-- 📱 **Responsive**: Mobile-first design with dark/light theme support
-- ⚡ **Performance**: Cloudflare Workers backend with sub-second response times
-- 🗄️ **Database**: Drizzle ORM with D1 database
-- 🧪 **Type Safety**: Comprehensive TypeScript setup
-- 🔧 **Developer Experience**: Hot reload, ESLint, and modern tooling
+- **Modern Design**: Clean interface with beautiful animations
+- **Responsive**: Mobile-first design with dark/light theme support
+- **Interactive**: Smooth scrolling, carousels, and engaging UI
+- **Fast Performance**: Optimized with Vite and code splitting
+- **Accessible**: WCAG compliant with keyboard navigation
 
-## 🏗️ Architecture
+## 🚀 Tech Stack
+
+- **React 18** - Modern React with hooks
+- **TypeScript** - Type-safe development
+- **Vite** - Lightning fast build tool
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Smooth animations and transitions
+- **React Router** - Client-side routing
+- **Lucide React** - Beautiful iconography
+
+## 📁 Project Structure
 
 ```
-├── src/                    # Frontend React application
-│   ├── components/         # Reusable UI components
-│   │   └── ui/            # shadcn/ui base components
-│   ├── pages/             # Page components
-│   ├── lib/               # Utilities and helpers
-│   └── styles/            # Global styles and themes
-├── worker/                # Cloudflare Workers backend
-│   ├── routes/            # API routes
-│   └── db/                # Database schema and migrations
-├── public/                # Static assets (Vite standard)
-│   ├── favicon.svg        # Site favicon
-│   └── *.{png,jpg,svg}    # Images, logos, etc.
-└── instructions/          # Documentation for adding features
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # Base UI components (Button, Input, etc.)
+│   └── ThemeProvider.tsx
+├── pages/              # Page components
+│   ├── Home.tsx        # Main portfolio page
+│   └── ProjectDetail.tsx
+├── data/               # Static data
+│   └── projects.ts     # Project information
+├── lib/                # Utilities
+│   └── utils.ts        # Helper functions
+└── styles/             # Global styles
+    └── globals.css     # Tailwind and custom styles
 ```
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- [Bun](https://bun.sh/) (recommended) or Node.js
-- [Cloudflare account](https://cloudflare.com/) for deployment
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd minimal-starter-template
-```
-
-2. Install dependencies:
-```bash
-bun install
-```
-
-3. Set up environment variables:
-```bash
-cp .env.example .env.local
-```
-
-4. Start the development server:
-```bash
-bun run dev
-```
-
-5. Visit `http://localhost:5173` to see your application.
-
-## 📦 Available Scripts
-
-- `bun run dev` - Start development server
-- `bun run build` - Build for production
-- `bun run preview` - Preview production build
-- `bun run pre-deploy` - Generate database migrations
-- `bun run db:generate` - Generate database types
-
-## 🎨 Customization
-
-### Theming
-
-The template uses semantic design tokens defined in `src/styles/global.css`. Customize colors, spacing, and typography by modifying the CSS custom properties.
-
-### Adding New Pages
-
-1. Create a new component in `src/pages/`
-2. Add the route in `src/app.tsx`
-3. Update navigation as needed
-
-### Components
-
-- Reusable components go in `src/components/`
-- Use shadcn/ui as a base for new components
-- Follow the existing patterns for props and styling
-
-## 🌐 Deployment
-
-### Cloudflare Workers
-
-1. Install Wrangler CLI:
-```bash
-bunx wrangler login
-```
-
-2. Configure your environment variables in Wrangler
-3. Deploy:
-```bash
-bun run pre-deploy
-bunx wrangler deploy
-```
-
-### Environment Variables
-
-Key environment variables to configure:
-
-```env
-# Database
-D1_DATABASE_NAME=your-database-name
-
-# Authentication (if enabled)
-BETTER_AUTH_SECRET=your-auth-secret
-VITE_BETTER_AUTH_URL=https://your-domain.com
-
-# Additional services as needed
-```
-
-## 📚 Documentation
-
-- [Database Guide](./instructions/database.md)
-- [Theming](./instructions/theming.md)
-- [Static Assets](./instructions/assets.md)
-- [Authentication](./instructions/authentication.md)
-- [Billing](./instructions/billing.md)
 
 ## 🛠️ Development
 
-### Code Style
+### Prerequisites
 
-- TypeScript for type safety
-- ESLint for code quality
-- Semantic HTML and accessibility
+- Node.js 18+
+- npm, yarn, or bun
 
-### Contributing
+### Installation
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+
+## 🎨 Customization
+
+### Theme Colors
+
+The project uses a custom color system with CSS variables. Edit `src/styles/globals.css` to customize colors:
+
+```css
+:root {
+  --background: oklch(0.985 0.008 95);
+  --foreground: oklch(0.26 0.03 95);
+  /* ... more color variables */
+}
+```
+
+### Content
+
+- **Personal Info**: Update contact details and social links in `src/pages/Home.tsx`
+- **Projects**: Edit `src/data/projects.ts` to add/modify project information
+- **Experience**: Update the `experiences` array in `src/pages/Home.tsx`
+- **Skills**: Modify the `skills` object in `src/pages/Home.tsx`
+
+### Assets
+
+- Replace `/public/hero-avatar.png` with your photo
+- Update `/public/favicon.svg` with your favicon
+- Modify SEO metadata in `index.html`
+
+## 📱 Responsive Design
+
+The portfolio is fully responsive with breakpoints:
+- Mobile: < 768px
+- Tablet: 768px - 1024px  
+- Desktop: > 1024px
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Netlify
+
+```bash
+# Build the project
+npm run build
+
+# Deploy the dist/ folder to Netlify
+```
+
+### GitHub Pages
+
+```bash
+# Build the project
+npm run build
+
+# Deploy the dist/ folder to GitHub Pages
+```
 
 ## 📄 License
 
-MIT License - see LICENSE file for details.
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contact
+
+- **Email**: iamrohitkandpal@gmail.com
+- **LinkedIn**: [rohit-kandpal](https://linkedin.com/in/rohit-kandpal)
+- **GitHub**: [iamrohitkandpal](https://github.com/iamrohitkandpal)
 
 ---
 
-**Minimal Starter** - Your creative canvas awaits. 🎨
+Built with ❤️ by Rohit Kandpal
