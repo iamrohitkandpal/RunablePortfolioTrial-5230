@@ -33,6 +33,7 @@ export const projects: Project[] = [
       "Multi-Level Analysis: Store-wise comparison and benchmarking, SKU-level forecasting for individual products, revenue forecasting beyond units, regional trend analysis"
     ],
     github: "https://github.com/iamrohitkandpal/Something-About-Data/tree/main/Data%20Forecasting%20for%20Retail",
+    demo: "https://retailvision-dev.streamlit.app/",
     image: "/projects/retailvision.webp"
   },
   {
@@ -154,7 +155,7 @@ export const projects: Project[] = [
       "Social Media Optimization: Specialized handling of hashtags, emojis, slang, and Twitter-specific text patterns for accurate sentiment detection",
       "Comprehensive Reporting: Automated report generation with statistical analysis, trend identification, and exportable results in multiple formats"
     ],
-    github: "https://github.com/iamrohitkandpal/Twitter-Sentiment-Analysis",
+    github: "https://github.com/iamrohitkandpal/Something-About-Data/tree/main/Tweets%20Sentiment%20Analysis",
     image: "/projects/twitter-sentiment.webp"
   },
   {
@@ -174,7 +175,7 @@ export const projects: Project[] = [
       "Cold Start Solution: Content-based fallback and popularity-based recommendations for new users and movies without sufficient rating data",
       "Interactive Interface: Jupyter widgets providing intuitive exploration of recommendations with filtering, sorting, and detailed movie information"
     ],
-    github: "https://github.com/iamrohitkandpal/Movie-Recommendation-System",
+    github: "https://github.com/iamrohitkandpal/Something-About-Data/tree/main/Movie%20Recomend%20System",
     image: "/projects/movie-recommendation.webp"
   },
   {
