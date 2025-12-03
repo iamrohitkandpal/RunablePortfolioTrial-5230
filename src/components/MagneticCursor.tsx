@@ -2,10 +2,18 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function MagneticCursor() {
+  const [isMobile, setIsMobile] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -25,8 +33,13 @@ export default function MagneticCursor() {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>

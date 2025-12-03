@@ -1,9 +1,23 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
 
 export default function ParticlesBackground() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      setIsMobile(isMobileDevice)
+    }
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return ()=> window.removeEventListener('resize', checkMobile);
+  })
+
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
@@ -14,11 +28,11 @@ export default function ParticlesBackground() {
         value: "transparent",
       },
     },
-    fpsLimit: 60,
+    fpsLimit: isMobile ? 30 : 60,
     interactivity: {
       events: {
         onHover: {
-          enable: true,
+          enable: !isMobile,
           mode: "grab",
         },
         resize: true,
@@ -39,7 +53,7 @@ export default function ParticlesBackground() {
       links: {
         color: "#888888",
         distance: 150,
-        enable: true,
+        enable: !isMobile,
         opacity: 0.15,
         width: 1,
       },
@@ -48,18 +62,18 @@ export default function ParticlesBackground() {
         enable: true,
         outModes: "out" as const,
         random: false,
-        speed: 0.5,
+        speed: isMobile ? 0.2 : 0.5,
         straight: false,
       },
       number: {
         density: {
           enable: true,
-          area: 800,
+          area: isMobile ? 1500 : 800,
         },
-        value: 50,
+        value: isMobile ? 15 : 50,
       },
       opacity: {
-        value: 0.3,
+        value: isMobile ? 0.15 : 0.3,
       },
       shape: {
         type: "circle",
@@ -69,7 +83,11 @@ export default function ParticlesBackground() {
       },
     },
     detectRetina: true,
-  }), []);
+  }), [isMobile]);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <Particles

@@ -184,11 +184,9 @@ export default function Home() {
       <Suspense fallback={null}>
         <ParticlesBackground />
       </Suspense>
-      {/* Animated Particle Background */}
-      <ParticlesBackground />
       
       {/* Enhanced Animated background effects */}
-      <div className="fixed inset-0 pointer-events-none">
+      <div className="fixed inset-0 pointer-events-none hidden md:block">
         {/* Animated gradient orbs with multiple colors */}
         <motion.div
           animate={{
