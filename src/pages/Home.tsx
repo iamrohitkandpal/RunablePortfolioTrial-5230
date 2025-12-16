@@ -2,11 +2,11 @@ import { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
-import { 
-  Github, 
-  Linkedin, 
-  Mail, 
-  Phone, 
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Phone,
   Briefcase,
   GraduationCap,
   Award,
@@ -34,6 +34,17 @@ const skills = {
 
 const experiences = [
   {
+    role: 'Full Stack Developer Intern',
+    company: 'WebStack Academy (Emertxe)',
+    location: 'Remote',
+    period: 'Sep 2025 – Nov 2025',
+    achievements: [
+      'Built MERN-based project prototypes in a collaborative remote environment using Git-based workflows',
+      'Learned cloud deployment concepts on Oracle Cloud Infrastructure (OCI), including VPCs, compute instances, machine images, Nginx reverse proxy, and domain configuration',
+      'Implemented core MERN features such as email verification and other utilities, gaining exposure to production-oriented application design'
+    ]
+  },
+  {
     role: 'Brand Web Developer',
     company: 'Freelance',
     location: 'Ahmedabad, Gujarat',
@@ -44,7 +55,7 @@ const experiences = [
     ]
   },
   {
-    role: 'Full Stack Developer',
+    role: 'MERN Developer',
     company: 'CodTech IT Solutions Pvt. Ltd.',
     location: 'Remote',
     period: 'Dec 2024 – Jan 2025',
@@ -166,7 +177,7 @@ export default function Home() {
   };
 
   const nextProjects = () => {
-    setCurrentProjectIndex((prev) => 
+    setCurrentProjectIndex((prev) =>
       Math.min(prev + projectsPerPage, projects.length - projectsPerPage)
     );
   };
@@ -184,7 +195,7 @@ export default function Home() {
       <Suspense fallback={null}>
         <ParticlesBackground />
       </Suspense>
-      
+
       {/* Enhanced Animated background effects */}
       <div className="fixed inset-0 pointer-events-none hidden md:block">
         {/* Animated gradient orbs with multiple colors */}
@@ -230,7 +241,7 @@ export default function Home() {
           }}
           className="absolute top-1/2 right-1/3 w-80 h-80 bg-linear-to-br from-cyan-500/15 via-teal-500/15 to-transparent rounded-full blur-3xl"
         />
-        
+
         {/* Subtle light beams */}
         <div className="absolute top-0 left-[20%] w-px h-full bg-linear-to-b from-foreground/10 via-transparent to-transparent" />
         <div className="absolute top-0 right-[25%] w-px h-full bg-linear-to-b from-foreground/8 via-transparent to-transparent" />
@@ -238,37 +249,37 @@ export default function Home() {
 
       <header className="sticky top-0 z-50 backdrop-blur-md bg-background/70 border-b border-border/50">
         <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="font-bold text-xl text-foreground"
           >
             RK
           </motion.div>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             className="flex gap-3"
           >
-            <a 
-              href="https://github.com/iamrohitkandpal" 
-              target="_blank" 
+            <a
+              href="https://github.com/iamrohitkandpal"
+              target="_blank"
               rel="noopener noreferrer"
               className="p-2 hover:bg-muted rounded-lg transition-all hover:scale-110"
               aria-label="GitHub Profile"
             >
               <Github className="w-5 h-5" />
             </a>
-            <a 
-              href="https://www.linkedin.com/in/rohit-kandpal-" 
-              target="_blank" 
+            <a
+              href="https://www.linkedin.com/in/rohit-kandpal-"
+              target="_blank"
               rel="noopener noreferrer"
               className="p-2 hover:bg-muted rounded-lg transition-all hover:scale-110"
               aria-label="LinkedIn Profile"
             >
               <Linkedin className="w-5 h-5" />
             </a>
-            <a 
+            <a
               href="https://leetcode.com/u/rohitkandpal/"
               target="_blank"
               rel="noopener noreferrer"
@@ -324,7 +335,7 @@ export default function Home() {
                   Full Stack Developer
                 </p>
                 <p className="text-muted-foreground leading-relaxed max-w-md">
-                  A developer who writes code, breaks things, fixes them, 
+                  A developer who writes code, breaks things, fixes them,
                   and calls it "learning experience."
                 </p>
               </motion.div>
@@ -335,7 +346,7 @@ export default function Home() {
                 transition={{ delay: 0.5 }}
                 className="flex flex-wrap gap-4"
               >
-                <Button 
+                <Button
                   size="lg"
                   onClick={() => scrollToSection('projects')}
                   className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8 group"
@@ -343,7 +354,7 @@ export default function Home() {
                   View Projects
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button 
+                <Button
                   size="lg"
                   variant="outline"
                   onClick={() => scrollToSection('contact')}
@@ -440,12 +451,12 @@ export default function Home() {
         <div className="py-12">
           <div className="flex items-center gap-2 justify-center">
             {[1, 2, 3, 4, 5].map((_, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.1 }}
-                className="w-1 h-1 rounded-full bg-foreground/20" 
+                className="w-1 h-1 rounded-full bg-foreground/20"
               />
             ))}
           </div>
@@ -464,7 +475,7 @@ export default function Home() {
               About Me
             </h2>
 
-            <motion.div 
+            <motion.div
               variants={fadeInUp}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="bg-card border border-dashed border-border rounded-xl p-8 mb-12 max-w-3xl mx-auto hover:border-solid transition-all"
@@ -473,7 +484,7 @@ export default function Home() {
                 I'm a 20-year-old full-stack developer who writes code, Googles errors, and hopes everything compiles before losing motivation.
               </p>
               <p className="text-muted-foreground leading-relaxed text-lg mb-4">
-                My workflow? Write code → pray it works → celebrate when it actually does (rare, but magical). 
+                My workflow? Write code → pray it works → celebrate when it actually does (rare, but magical).
                 Mostly just trying to make things work without breaking the entire project in the process.
               </p>
               <p className="text-muted-foreground leading-relaxed text-lg">
@@ -493,7 +504,7 @@ export default function Home() {
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {items.map((skill) => (
-                      <motion.span 
+                      <motion.span
                         key={skill}
                         whileHover={{ scale: 1.05 }}
                         className="px-3 py-1.5 bg-muted text-foreground text-sm rounded-md border border-border hover:bg-accent hover:border-solid transition-all cursor-default"
@@ -539,7 +550,7 @@ export default function Home() {
                       initial={{ opacity: 0, y: 20, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                      transition={{ 
+                      transition={{
                         duration: 0.5,
                         ease: [0.4, 0, 0.2, 1]
                       }}
@@ -584,11 +595,10 @@ export default function Home() {
                       <button
                         key={idx}
                         onClick={() => setCurrentExpIndex(idx)}
-                        className={`h-2 rounded-full transition-all ${
-                          idx === currentExpIndex 
-                            ? 'bg-foreground w-8' 
+                        className={`h-2 rounded-full transition-all ${idx === currentExpIndex
+                            ? 'bg-foreground w-8'
                             : 'bg-foreground/30 w-2'
-                        }`}
+                          }`}
                         aria-label={`Go to experience ${idx + 1}`}
                       />
                     ))}
@@ -635,7 +645,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-foreground">
                 Featured Projects
               </h2>
-              
+
               {/* Carousel Navigation */}
               <div className="flex gap-2">
                 <Button
@@ -669,8 +679,8 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                    transition={{ 
-                      duration: 0.5, 
+                    transition={{
+                      duration: 0.5,
                       delay: idx * 0.08,
                       ease: [0.4, 0, 0.2, 1]
                     }}
@@ -688,7 +698,7 @@ export default function Home() {
 
                         <div className="flex flex-wrap gap-2 mb-4">
                           {project.stack.slice(0, 3).map((tech) => (
-                            <span 
+                            <span
                               key={tech}
                               className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded border border-border"
                             >
@@ -740,11 +750,10 @@ export default function Home() {
                   <button
                     key={idx}
                     onClick={() => setCurrentProjectIndex(pageStart)}
-                    className={`h-2 rounded-full transition-all ${
-                      isActive 
-                        ? 'bg-foreground w-8' 
+                    className={`h-2 rounded-full transition-all ${isActive
+                        ? 'bg-foreground w-8'
                         : 'bg-foreground/30 w-2 hover:bg-foreground/50'
-                    }`}
+                      }`}
                     aria-label={`Go to projects page ${idx + 1}`}
                   />
                 );

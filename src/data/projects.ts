@@ -32,7 +32,7 @@ export const projects: Project[] = [
       "Performance Metrics: Fast model training in seconds, real-time predictions, scalable for millions of data points from multiple stores and SKUs",
       "Multi-Level Analysis: Store-wise comparison and benchmarking, SKU-level forecasting for individual products, revenue forecasting beyond units, regional trend analysis"
     ],
-    github: "https://github.com/iamrohitkandpal/Something-About-Data/tree/main/Data%20Forecasting%20for%20Retail",
+    github: "https://github.com/iamrohitkandpal/RetailVision",
     demo: "https://retailvision-dev.streamlit.app/",
     image: "/projects/retailvision.webp"
   },
