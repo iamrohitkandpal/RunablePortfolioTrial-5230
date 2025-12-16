@@ -77,6 +77,26 @@ export const projects: Project[] = [
     image: "/projects/rakshak.webp"
   },
   {
+    id: "khaavna",
+    title: "Khaavna: News Sentiment Intelligence",
+    subtitle: "AI-powered news sentiment analyzer comparing Indian vs International media coverage with Groq LLaMA integration",
+    period: "Oct 2025 – Dec 2025",
+    stack: ["Python 3.8+", "Streamlit", "Groq LLaMA 3.3", "TextBlob", "VADER", "Plotly", "SQLite", "Pandas", "GNews API"],
+    description: "A powerful news sentiment intelligence platform that decodes the emotion behind every headline. Features AI-powered summaries using Groq LLaMA, dual sentiment analysis (TextBlob + VADER ensemble), regional bias detection comparing Indian vs International media, and interactive Plotly visualizations.",
+    fullDescription: "Khaavna (खबर की भावना - 'Feeling of News') is a comprehensive news sentiment analysis platform designed to help users understand media bias and sentiment patterns across regions. It uses a dual-engine approach combining TextBlob (0.6 weight) and VADER (0.4 weight) for 95%+ sentiment accuracy. The system fetches news from 20+ Indian sources and 11 international countries using parallel ThreadPoolExecutor (10x faster retrieval). Groq's LLaMA 3.3 70B model generates conversational AI summaries comparing coverage differences between regions. SQLite caching with WAL mode enables sub-millisecond cache hits for repeated searches. The interactive Streamlit dashboard provides real-time analysis with adjustable filters for region, date range, source selection, and article count. Users can view sentiment breakdowns through interactive charts, word clouds, and sentiment timelines. Export options include CSV, JSON, and markdown summary reports. The platform serves political analysts, PR professionals, investors, researchers, and journalists seeking to quantify media bias with data-backed metrics.",
+    flow: "User Search Query → SQLite Cache Check (instant if cached) → GNews Parallel Fetching (11 countries, ThreadPoolExecutor) → Text Preprocessing (cleaning, stopword removal) → Dual Sentiment Analysis (TextBlob + VADER ensemble) → Regional Grouping (Indian vs International) → Groq LLaMA AI Summary Generation → SQLite Caching (WAL mode) → Interactive Dashboard Visualization (Plotly charts, word clouds) → Export Options (CSV, JSON, Markdown reports)",
+    architecture: "Data Fetching: GNews library for unlimited API access, ThreadPoolExecutor for parallel international news retrieval from 11 countries. Sentiment Engine: TextBlob for polarity/subjectivity analysis, VADER for social-media-optimized compound scores, weighted ensemble (0.6/0.4) for classification. AI Layer: Groq LLaMA 3.3 70B for natural language summary generation with 8th-grade reading level prompts. Caching: SQLite with WAL mode, foreign keys, and 10K cache size for sub-millisecond hits. Dashboard: Streamlit with @st.cache_resource for initialization, Plotly for interactive visualizations, expandable chart sections for lazy loading.",
+    achievements: [
+      "Dual Sentiment Engine: TextBlob + VADER ensemble with 95%+ accuracy, weighted scoring (0.6/0.4) with configurable thresholds for positive/neutral/negative classification",
+      "AI-Powered Insights: Groq LLaMA 3.3 70B integration for conversational summaries comparing Indian vs International media coverage with specific headline examples",
+      "Regional Bias Detection: Side-by-side analysis of 20+ Indian sources vs 11 international countries (US, UK, Canada, Australia, Singapore, Malaysia, and more)",
+      "Performance Optimized: ThreadPoolExecutor for 10x faster parallel fetching, SQLite WAL mode for instant cache hits, Streamlit caching for zero re-initialization",
+      "Comprehensive Analytics: Word clouds, sentiment timelines, regional comparison charts, exportable reports in CSV/JSON/Markdown formats"
+    ],
+    github: "https://github.com/iamrohitkandpal/Khaavna-News_Sentiment_Analyzer",
+    image: "/projects/khaavna.webp"
+  },
+  {
     id: "kurukshetra",
     title: "Kurukshetra: Advanced Cybersecurity Training Platform",
     subtitle: "OWASP Top 10 vulnerability training platform with dual-database architecture for ethical hacker education",
@@ -99,7 +119,7 @@ export const projects: Project[] = [
   },
   {
     id: "chitrakaar",
-    title: "Chitrakaar: CommunityAI Art Generator",
+    title: "Chitrakaar: Community AI Art Generator",
     subtitle: "AI-powered image generation platform using Stable Diffusion with community showcase and social features",
     period: "Sep 2024 – Nov 2024",
     stack: ["React", "Vite", "Tailwind CSS", "Node.js", "Express", "MongoDB", "Mongoose", "Stable Diffusion v1.5", "Hugging Face API", "Cloudinary", "Render"],
