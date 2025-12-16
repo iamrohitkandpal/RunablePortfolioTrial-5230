@@ -99,7 +99,7 @@ export const projects: Project[] = [
   },
   {
     id: "chitrakaar",
-    title: "Chitrakaar: AI Art Generator",
+    title: "Chitrakaar: CommunityAI Art Generator",
     subtitle: "AI-powered image generation platform using Stable Diffusion with community showcase and social features",
     period: "Sep 2024 – Nov 2024",
     stack: ["React", "Vite", "Tailwind CSS", "Node.js", "Express", "MongoDB", "Mongoose", "Stable Diffusion v1.5", "Hugging Face API", "Cloudinary", "Render"],
