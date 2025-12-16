@@ -51,7 +51,8 @@ const experiences = [
     period: 'Jul 2025 – Aug 2025',
     achievements: [
       'Developed and deployed 2 client websites (Insperia Technology & Brandvia Digital) achieving 90+ Lighthouse SEO score and improved responsiveness by 35%',
-      'Enhanced user engagement through optimized design, Bootstrap framework, and modern web practices'
+      'Enhanced user engagement through optimized design, Bootstrap framework, and modern web practices (Swiper.js, AOS, GLightbox) across devices',
+      'Optimized performance with lazy loading, optimized assets, and semantic HTML'
     ]
   },
   {

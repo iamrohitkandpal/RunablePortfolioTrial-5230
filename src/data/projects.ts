@@ -39,7 +39,7 @@ export const projects: Project[] = [
   {
     id: "krishnacrypt",
     title: "KrishnaCrypt: Advanced Secure Chat Application",
-    subtitle: "End-to-end encrypted real-time chat with custom cryptographic algorithms and VPN-like tunneling",
+    subtitle: "End-to-end encrypted real-time chat with custom experimental cryptographic algorithms and VPN-like tunneling",
     period: "Jul 2025 – Sep 2025",
     stack: ["React 18.x", "Node.js 18.x", "Express.js 4.18+", "Socket.io 4.7+", "MongoDB 6.x", "Mongoose 7.x", "JWT", "bcrypt 5.x", "Custom SPN Encryption", "AES-256-GCM", "Docker"],
     description: "A cutting-edge cybersecurity-focused real-time chat application featuring custom 3-round Substitution-Permutation Network (SPN) encryption, end-to-end encryption with AES-256-GCM, friend-based communication system, and educational cryptographic demonstrations for learning advanced encryption techniques.",
