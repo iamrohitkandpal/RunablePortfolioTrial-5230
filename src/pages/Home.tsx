@@ -193,8 +193,8 @@ export default function Home() {
   const canGoNext = currentProjectIndex + projectsPerPage < projects.length;
 
   return (
-    <div className="min-h-screen gradient-bg relative overflow-hidden">
-      <Snowfall color='white' />
+    <div className="min-h-screen gradient-bg relative">
+      <Snowfall color='#A0E3F6' />
       <Suspense fallback={null}>
         <ParticlesBackground />
       </Suspense>
@@ -599,8 +599,8 @@ export default function Home() {
                         key={idx}
                         onClick={() => setCurrentExpIndex(idx)}
                         className={`h-2 rounded-full transition-all ${idx === currentExpIndex
-                            ? 'bg-foreground w-8'
-                            : 'bg-foreground/30 w-2'
+                          ? 'bg-foreground w-8'
+                          : 'bg-foreground/30 w-2'
                           }`}
                         aria-label={`Go to experience ${idx + 1}`}
                       />
@@ -754,8 +754,8 @@ export default function Home() {
                     key={idx}
                     onClick={() => setCurrentProjectIndex(pageStart)}
                     className={`h-2 rounded-full transition-all ${isActive
-                        ? 'bg-foreground w-8'
-                        : 'bg-foreground/30 w-2 hover:bg-foreground/50'
+                      ? 'bg-foreground w-8'
+                      : 'bg-foreground/30 w-2 hover:bg-foreground/50'
                       }`}
                     aria-label={`Go to projects page ${idx + 1}`}
                   />

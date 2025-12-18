@@ -36,7 +36,7 @@ export default function ProjectDetail() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <Snowfall color='white' />
+      <Snowfall color='#A0E3F6' />
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b border-border/50">
         <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
