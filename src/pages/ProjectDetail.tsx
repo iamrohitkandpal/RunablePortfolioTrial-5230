@@ -15,7 +15,7 @@ const fadeInUp = {
 export default function ProjectDetail() {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  
+
   const project = projects.find(p => p.id === projectId);
 
   // Scroll to top when component mounts
@@ -36,12 +36,19 @@ export default function ProjectDetail() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <Snowfall color='#ffffff98' />
+      <Snowfall
+        color="#ffffff"
+        snowflakeCount={150}
+        speed={[0.5, 2]}
+        wind={[-0.5, 1.5]}
+        radius={[0.5, 3]}
+        style={{ opacity: 0.7 }}
+      />
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b border-border/50">
         <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => navigate('/')}
             className="flex items-center gap-2"
           >
@@ -72,7 +79,7 @@ export default function ProjectDetail() {
               </span>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               variants={fadeInUp}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-5xl md:text-6xl font-bold mb-4 text-foreground"
@@ -198,7 +205,7 @@ export default function ProjectDetail() {
                 {project.architecture.split(/(?=[A-Z][a-z]+:)/).filter(Boolean).map((section, idx) => {
                   const [title, ...content] = section.split(':');
                   if (!content.length) return null;
-                  
+
                   return (
                     <div key={idx} className="group">
                       <div className="flex items-start gap-3">

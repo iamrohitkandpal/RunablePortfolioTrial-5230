@@ -194,7 +194,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gradient-bg relative">
-      <Snowfall color='#ffffff98' />
+      <Snowfall
+        color="#ffffff"
+        snowflakeCount={150}
+        speed={[0.5, 2]}
+        wind={[-0.5, 1.5]}
+        radius={[0.5, 3]}
+        style={{ opacity: 0.7 }}
+      />
       <Suspense fallback={null}>
         <ParticlesBackground />
       </Suspense>
