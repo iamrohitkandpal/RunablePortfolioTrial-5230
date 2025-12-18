@@ -194,7 +194,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gradient-bg relative">
-      <Snowfall color='#A0E3F6' />
+      <Snowfall color='#ffffff98' />
       <Suspense fallback={null}>
         <ParticlesBackground />
       </Suspense>
