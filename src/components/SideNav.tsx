@@ -59,13 +59,12 @@ export default function SideNav() {
           >
             {/* Dot */}
             <div
-              className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
-                activeSection === item.id
+              className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${activeSection === item.id
                   ? 'bg-foreground border-foreground scale-125'
                   : 'bg-transparent border-foreground/30 hover:border-foreground/60'
-              }`}
+                }`}
             />
-            
+
             {/* Tooltip */}
             <motion.div
               className="absolute right-full mr-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
@@ -86,18 +85,17 @@ export default function SideNav() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-card/95 backdrop-blur-md border-t border-border shadow-lg"
+        className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]"
       >
         <div className="flex justify-around items-center px-2 sm:px-4 py-2.5 sm:py-3">
           {navItems.map((item) => (
             <motion.button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`p-2 sm:p-2.5 rounded-lg transition-all ${
-                activeSection === item.id
+              className={`p-2 sm:p-2.5 rounded-lg transition-all ${activeSection === item.id
                   ? 'text-foreground bg-muted'
                   : 'text-muted-foreground hover:text-foreground'
-              }`}
+                }`}
               whileTap={{ scale: 0.9 }}
               aria-label={item.label}
             >

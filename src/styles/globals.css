@@ -95,6 +95,17 @@
   html,
   body {
     height: 100%;
+    overscroll-behavior: none;
+  }
+
+  /* Fix for mobile browsers hiding/showing address bar */
+  html {
+    height: -webkit-fill-available;
+  }
+  
+  body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 
   body {
