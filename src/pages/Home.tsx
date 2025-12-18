@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { projects } from '@/data/projects';
+import Snowfall from 'react-snowfall'
 
 const ParticlesBackground = lazy(() => import('@/components/ParticlesBackground'));
 
@@ -193,6 +194,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gradient-bg relative overflow-hidden">
+      <Snowfall color='white' />
       <Suspense fallback={null}>
         <ParticlesBackground />
       </Suspense>

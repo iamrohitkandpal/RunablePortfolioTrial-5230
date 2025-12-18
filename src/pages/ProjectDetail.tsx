@@ -5,6 +5,7 @@ import { Github, ExternalLink, ArrowLeft, Code2, Workflow, CheckCircle2 } from '
 import { Button } from '@/components/ui/button';
 import { projects } from '@/data/projects';
 import FlowDiagram from '@/components/FlowDiagram';
+import Snowfall from 'react-snowfall'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -35,6 +36,7 @@ export default function ProjectDetail() {
 
   return (
     <div className="min-h-screen gradient-bg">
+      <Snowfall color='white' />
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b border-border/50">
         <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">

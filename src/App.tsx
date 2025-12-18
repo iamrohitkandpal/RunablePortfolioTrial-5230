@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { ThemeProvider } from './components/ThemeProvider'
-import Snowfall from 'react-snowfall'
 import MagneticCursor from './components/MagneticCursor'
 import SideNav from './components/SideNav'
 import Home from './pages/Home'
@@ -12,7 +11,6 @@ function AppContent() {
 
   return (
     <>
-      <Snowfall color='white' />
       <MagneticCursor />
       {!isProjectDetail && <SideNav />}
       <Routes>
