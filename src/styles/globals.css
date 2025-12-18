@@ -174,17 +174,7 @@
     linear-gradient(90deg, transparent 0%, var(--foreground) 2%, transparent 3%) 0 0 / 100px 100px,
     linear-gradient(0deg, transparent 0%, var(--foreground) 2%, transparent 3%) 0 0 / 100px 100px;
   opacity: 0.02;
-  animation: grid-animation 20s linear infinite;
   pointer-events: none;
-}
-
-@keyframes grid-animation {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(100px, 100px);
-  }
 }
 
 /* Glow effect for interactive elements */
