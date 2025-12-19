@@ -265,26 +265,31 @@ export default function Home() {
             className="font-bold text-xl text-foreground relative"
           >
             <span>R</span>
-            <span className="relative">
+            <span className="relative inline-block">
               K
-              {/* Santa Hat */}
+              {/* Santa Hat - sitting on top of K */}
               <svg
-                className="absolute -top-3 -right-1 w-5 h-5 rotate-12"
-                viewBox="0 0 64 64"
+                className="absolute -top-2.5 left-0 w-4 h-4 -rotate-6"
+                viewBox="0 0 100 100"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* Hat body */}
+                {/* Hat body - curved triangle */}
                 <path
-                  d="M8 52 L32 8 L56 52 Z"
+                  d="M10 85 Q15 40 50 10 Q85 40 90 85 Z"
                   fill="#dc2626"
-                  stroke="#991b1b"
-                  strokeWidth="1"
                 />
-                {/* White fur trim */}
-                <ellipse cx="32" cy="54" rx="28" ry="6" fill="#f5f5f4" />
-                {/* Pom pom */}
-                <circle cx="32" cy="6" r="6" fill="#f5f5f4" />
+                {/* Hat shading for depth */}
+                <path
+                  d="M50 10 Q70 35 75 85 L90 85 Q85 40 50 10 Z"
+                  fill="#b91c1c"
+                />
+                {/* White fur trim at bottom */}
+                <ellipse cx="50" cy="88" rx="45" ry="10" fill="#fafafa" />
+                <ellipse cx="50" cy="86" rx="42" ry="7" fill="#e5e5e5" />
+                {/* Pom pom at top */}
+                <circle cx="50" cy="8" r="10" fill="#fafafa" />
+                <circle cx="48" cy="6" r="3" fill="#e5e5e5" opacity="0.5" />
               </svg>
             </span>
           </motion.div>
