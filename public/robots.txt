@@ -1,4 +1,18 @@
+# Robots.txt for Rohit Kandpal's Portfolio
+# Allow all search engines to crawl all content
+
 User-agent: *
 Allow: /
 
+# Explicitly allow important paths
+Allow: /project/
+
+# Disallow any potential admin or config paths (if they exist in future)
+Disallow: /api/
+Disallow: /.well-known/
+
+# Crawl-delay for polite crawling (optional)
+Crawl-delay: 1
+
+# Sitemap location for Google and other search engines
 Sitemap: https://www.devrohitkandpal.netlify.app/sitemap.xml
