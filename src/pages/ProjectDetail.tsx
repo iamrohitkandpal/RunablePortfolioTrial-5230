@@ -63,7 +63,7 @@ export default function ProjectDetail() {
               <img
                 src="/santa-hat-color-vector.png"
                 alt=""
-                className="absolute -top-3 -left-1 w-6 h-6 rotate-[15deg] pointer-events-none"
+                className="absolute -top-2 -rotate-35 -right-1 w-8 h-8 scale-150 object-contain pointer-events-none"
               />
             </span>
           </div>
