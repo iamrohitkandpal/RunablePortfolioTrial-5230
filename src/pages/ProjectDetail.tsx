@@ -59,30 +59,12 @@ export default function ProjectDetail() {
             <span>R</span>
             <span className="relative inline-block">
               K
-              {/* Santa Hat - sitting on top of K */}
-              <svg
-                className="absolute -top-2.5 left-0 w-4 h-4 -rotate-6"
-                viewBox="0 0 100 100"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Hat body - curved triangle */}
-                <path
-                  d="M10 85 Q15 40 50 10 Q85 40 90 85 Z"
-                  fill="#dc2626"
-                />
-                {/* Hat shading for depth */}
-                <path
-                  d="M50 10 Q70 35 75 85 L90 85 Q85 40 50 10 Z"
-                  fill="#b91c1c"
-                />
-                {/* White fur trim at bottom */}
-                <ellipse cx="50" cy="88" rx="45" ry="10" fill="#fafafa" />
-                <ellipse cx="50" cy="86" rx="42" ry="7" fill="#e5e5e5" />
-                {/* Pom pom at top */}
-                <circle cx="50" cy="8" r="10" fill="#fafafa" />
-                <circle cx="48" cy="6" r="3" fill="#e5e5e5" opacity="0.5" />
-              </svg>
+              {/* Santa Hat */}
+              <img
+                src="/santa-hat-color-vector.png"
+                alt=""
+                className="absolute -top-3 -left-1 w-6 h-6 rotate-[15deg] pointer-events-none"
+              />
             </span>
           </div>
         </div>
