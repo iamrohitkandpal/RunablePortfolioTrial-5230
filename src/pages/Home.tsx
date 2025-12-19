@@ -262,9 +262,31 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="font-bold text-xl text-foreground"
+            className="font-bold text-xl text-foreground relative"
           >
-            RK
+            <span>R</span>
+            <span className="relative">
+              K
+              {/* Santa Hat */}
+              <svg
+                className="absolute -top-3 -right-1 w-5 h-5 rotate-12"
+                viewBox="0 0 64 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Hat body */}
+                <path
+                  d="M8 52 L32 8 L56 52 Z"
+                  fill="#dc2626"
+                  stroke="#991b1b"
+                  strokeWidth="1"
+                />
+                {/* White fur trim */}
+                <ellipse cx="32" cy="54" rx="28" ry="6" fill="#f5f5f4" />
+                {/* Pom pom */}
+                <circle cx="32" cy="6" r="6" fill="#f5f5f4" />
+              </svg>
+            </span>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
