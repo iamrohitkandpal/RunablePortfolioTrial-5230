@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
@@ -132,7 +132,16 @@ export default function Home() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [currentExpIndex, setCurrentExpIndex] = useState(0);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const projectsPerPage = 3;
+
+  // Detect mobile for conditional effects (snowfall on mobile, particles on desktop)
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -194,17 +203,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gradient-bg relative">
-      <Snowfall
-        color="#ffffff"
-        snowflakeCount={150}
-        speed={[0.5, 2]}
-        wind={[-0.5, 1.5]}
-        radius={[0.5, 3]}
-        style={{ opacity: 0.7 }}
-      />
-      <Suspense fallback={null}>
-        <ParticlesBackground />
-      </Suspense>
+      {/* Snowfall for mobile, Particles for desktop - for better performance */}
+      {isMobile ? (
+        <Snowfall
+          color="#ffffff"
+          snowflakeCount={150}
+          speed={[0.5, 2]}
+          wind={[-0.5, 1.5]}
+          radius={[0.5, 3]}
+          style={{ opacity: 0.7 }}
+        />
+      ) : (
+        <Suspense fallback={null}>
+          <ParticlesBackground />
+        </Suspense>
+      )}
 
       {/* Enhanced Animated background effects */}
       <div className="fixed inset-0 pointer-events-none hidden md:block">

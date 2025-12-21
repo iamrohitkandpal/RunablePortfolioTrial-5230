@@ -15,6 +15,7 @@ const fadeInUp = {
 export default function ProjectDetail() {
   const { projectId } = useParams();
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = React.useState(false);
 
   const project = projects.find(p => p.id === projectId);
 
@@ -22,6 +23,14 @@ export default function ProjectDetail() {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [projectId]);
+
+  // Detect mobile for conditional snowfall
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   if (!project) {
     return (
@@ -36,14 +45,17 @@ export default function ProjectDetail() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <Snowfall
-        color="#ffffff"
-        snowflakeCount={150}
-        speed={[0.5, 2]}
-        wind={[-0.5, 1.5]}
-        radius={[0.5, 3]}
-        style={{ opacity: 0.7 }}
-      />
+      {/* Snowfall only on mobile for better performance */}
+      {isMobile && (
+        <Snowfall
+          color="#ffffff"
+          snowflakeCount={150}
+          speed={[0.5, 2]}
+          wind={[-0.5, 1.5]}
+          radius={[0.5, 3]}
+          style={{ opacity: 0.7 }}
+        />
+      )}
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b border-border/50">
         <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
